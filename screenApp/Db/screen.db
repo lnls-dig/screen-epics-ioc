@@ -1,0 +1,237 @@
+######################################################################
+#
+#            Fluorescent Screen Application Database
+#
+# Desc: These records provide a high-level abstraction layer for
+#       the Fluorescent Screen application, communicating with
+#       two low-level IOCs. One for the motor controller (and 
+#       LED control), and another for the camera.
+#
+#####################################################################
+
+#####################################################################
+# LOW LEVEL IOCs INFO
+#
+# Desc: Records providing information regarding the motion
+# controller and camera IOCs.
+
+# Prefix of the motor controller low-level IOC
+record(stringout, "$(P)$(R)MtrCtrlPrefix-Cte"){
+  field(DESC, "Motor controller prefix")
+  field(VAL, "$(MTR_CTRL_PREFIX)")
+}
+
+# Prefix of the camera low-level IOC
+record(stringout, "$(P)$(R)CamPrefix-Cte"){
+  field(DESC, "Camera prefix")
+  field(VAL, "$(CAM_PREFIX)")
+}
+
+#####################################################################
+# SCREEN POSITIONING
+#
+# Desc: Records related to screen positioning and motion.
+
+# Fluorescent screen position set point
+record(ao, "$(P)$(R)FluorScrnPos-SP"){
+  field(DESC, "Set fluorescent screen position")
+  field(PINI, "YES")
+  field(FLNK, "$(P)$(R)FluorScrnPos-RB")
+}
+
+# Fluorescent screen position readback
+record(ai, "$(P)$(R)FluorScrnPos-RB"){
+  field(DESC, "Fluorescent screen position RB")
+  field(ADEL, "-1")
+  field(MDEL, "-1")
+  field(INP, "$(P)$(R)FluorScrnPos-SP")
+}
+
+# Load fluorescent screen position with encoder readback value
+record(bo, "$(P)$(R)GetFluorScrnPos-Cmd"){
+  field(DESC, "Load fluor scrn pos with encoder read")
+  field(ONAM, "On")
+  field(ZNAM, "Off")
+  field(HIGH, "0.5")
+  field(FLNK, "$(P)$(R)GetFluorScrnPosCalc")
+}
+
+# Transfer encorder position (motor RBV) to fluorescent screen position
+record(calcout, "$(P)$(R)GetFluorScrnPosCalc"){
+  field(DESC, "Transfer encoder read to fluor scrn pos")
+  field(INPA, "$(MTR_CTRL_PREFIX)Mtr.RBV")
+  field(INPB, "$(P)$(R)GetFluorScrnPos-Cmd")
+  field(CALC, "B")                                                    # Command state
+  field(OCAL, "A")                                                    # Value to be transferred
+  field(OOPT, "When Non-zero")
+  field(DOPT, "Use OCAL")
+  field(OUT, "$(P)$(R)FluorScrnPos-SP PP")                            # Transfer encoder position to stored position
+}
+
+# Calibration screen position set point
+record(ao, "$(P)$(R)CalScrnPos-SP"){
+  field(DESC, "Set calibration screen position")
+  field(PINI, "YES")
+  field(FLNK, "$(P)$(R)CalScrnPos-RB")
+}
+
+# Calibration screen position readback
+record(ai, "$(P)$(R)CalScrnPos-RB"){
+  field(DESC, "Calibration screen position RB")
+  field(ADEL, "-1")
+  field(MDEL, "-1")
+  field(INP, "$(P)$(R)CalScrnPos-SP")
+}
+
+# Load calibration screen position with encoder readback value
+record(bo, "$(P)$(R)GetCalScrnPos-Cmd"){
+  field(DESC, "Load cal scrn pos with encoder read")
+  field(ONAM, "On")
+  field(ZNAM, "Off")
+  field(HIGH, "0.5")
+  field(FLNK, "$(P)$(R)GetCalScrnPosCalc")
+}
+
+# Transfer encorder position (motor RBV) to calibration screen position
+record(calcout, "$(P)$(R)GetCalScrnPosCalc"){
+  field(DESC, "Transfer encoder read to cal scrn pos")
+  field(INPA, "$(MTR_CTRL_PREFIX)Mtr.RBV")
+  field(INPB, "$(P)$(R)GetCalScrnPos-Cmd")
+  field(CALC, "B")                                                    # Command state
+  field(OCAL, "A")                                                    # Value to be transferred
+  field(OOPT, "When Non-zero")
+  field(DOPT, "Use OCAL")
+  field(OUT, "$(P)$(R)CalScrnPos-SP PP")                              # Transfer encoder position to stored position
+}
+
+# Choose screen type, and place it in front of
+# the beam
+record(mbbo, "$(P)$(R)ScrnType-Sel"){
+  field(DESC, "Screen type")
+  field(ZRVL, "0")
+  field(ZRST, "None")
+  field(ONVL, "1")
+  field(ONST, "Calibration")
+  field(TWVL, "2")
+  field(TWST, "Fluorescent")
+  field(FLNK, "$(P)$(R)ScrnTypeCalc")
+}
+
+# Calc to increment screen type option number
+record(calc, "$(P)$(R)ScrnTypeCalc"){
+  field(DESC, "Inc screen type option number")
+  field(INPA, "$(P)$(R)ScrnType-Sel")
+  field(CALC, "A+1")
+  field(FLNK, "$(P)$(R)ScrnTypeConfig")
+}
+
+# Transfer position of selected screen type to motor
+# record value. If 'None' was selected, do homing.
+record(seq, "$(P)$(R)ScrnTypeConfig"){
+  field(DESC, "Move motor to selected scrn type pos")
+  field(SELM, "Specified")
+  field(SELL, "$(P)$(R)ScrnTypeCalc")
+  field(DO1, "1")
+  field(DOL2, "$(P)$(R)CalScrnPos-RB")
+  field(DOL3, "$(P)$(R)FluorScrnPos-RB")
+  field(LNK1, "$(MTR_CTRL_PREFIX)HomeToLimSw-Cmd PP")
+  field(LNK2, "$(MTR_CTRL_PREFIX)AbsPos-SP PP")
+  field(LNK3, "$(MTR_CTRL_PREFIX)AbsPos-SP PP")
+}
+
+# Screen type read calc 1
+record(calc, "$(P)$(R)ScrnTypeRead1"){
+  field(DESC, "Screen type read calc 1")
+  field(PINI, "YES")
+  field(INPA, "$(MTR_CTRL_PREFIX)Mtr.RBV CPP")
+  field(INPB, "$(P)$(R)CalScrnPos-RB CPP")
+  field(INPC, "$(P)$(R)FluorScrnPos-RB CPP")
+  field(INPD, "$(P)$(R)AcceptedErr-RB CPP")
+  field(CALC, "A=B?1:(A=C?2:0)")
+  field(FLNK, "$(P)$(R)ScrnTypeRead2")
+}
+
+# Screen type read calc 2
+record(calcout, "$(P)$(R)ScrnTypeRead2"){
+  field(DESC, "Screen type read calc 2")
+  field(INPA, "$(P)$(R)ScrnTypeRead1")
+  field(INPB, "$(MTR_CTRL_PREFIX)Mtr.RBV")
+  field(INPC, "$(P)$(R)CalScrnPos-RB")
+  field(INPD, "$(P)$(R)FluorScrnPos-RB")
+  field(INPE, "$(P)$(R)AcceptedErr-RB")
+  field(CALC, "A#0?A:((B<C+E)&&(B>C-E)?1:((B<D+E)&&(B>D-E)?2:0))")
+  field(OUT, "$(P)$(R)ScrnType-Sts PP")
+}
+
+# Screen type readback value
+record(mbbi, "$(P)$(R)ScrnType-Sts"){
+  field(DESC, "Screen type RB")
+  field(ZRVL, "0")
+  field(ZRST, "None")
+  field(ONVL, "1")
+  field(ONST, "Calibration")
+  field(TWVL, "2")
+  field(TWST, "Fluorescent")
+}
+
+# Accepted Screen position error when
+# defining Screen type readback value
+record(ao, "$(P)$(R)AcceptedErr-SP"){
+  field(DESC, "Screen pos error tolerance")
+  field(PINI, "YES")
+  field(VAL, "1")
+  field(FLNK, "$(P)$(R)AcceptedErr-RB")
+}
+
+# Accepted Screen position error RB
+record(ai, "$(P)$(R)AcceptedErr-RB"){
+  field(DESC, "Screen pos error tolerance RB")
+  field(INP, "$(P)$(R)AcceptedErr-SP")
+  field(ADEL, "-1")
+  field(MDEL, "-1")
+}
+
+#####################################################################
+# EGU and PREC SETTINGS
+#
+# Desc: Engineering units and precision are
+# obtained from low-level controller IOC.
+
+# EGU is obtained from low-level controller IOC
+record(sseq, "$(P)$(R)AutoSetEGU"){
+  field(DESC, "Set records with controller IOC EGU")
+  field(PINI, "YES")
+  field(SELM, "All")
+  field(DOL1, "$(MTR_CTRL_PREFIX)Mtr.EGU CPP")
+  field(DOL2, "$(MTR_CTRL_PREFIX)Mtr.EGU")
+  field(DOL3, "$(MTR_CTRL_PREFIX)Mtr.EGU")
+  field(DOL4, "$(MTR_CTRL_PREFIX)Mtr.EGU")
+  field(DOL5, "$(MTR_CTRL_PREFIX)Mtr.EGU")
+  field(DOL6, "$(MTR_CTRL_PREFIX)Mtr.EGU")
+  field(LNK1, "$(P)$(R)FluorScrnPos-SP.EGU")
+  field(LNK2, "$(P)$(R)FluorScrnPos-RB.EGU")
+  field(LNK3, "$(P)$(R)CalScrnPos-SP.EGU")
+  field(LNK4, "$(P)$(R)CalScrnPos-RB.EGU")
+  field(LNK5, "$(P)$(R)AcceptedErr-SP.EGU")
+  field(LNK6, "$(P)$(R)AcceptedErr-RB.EGU")
+}
+
+# PREC is obtained from low-level controller IOC
+record(sseq, "$(P)$(R)AutoSetPrec"){
+  field(DESC, "Set records with controller IOC PREC")
+  field(PINI, "YES")
+  field(SELM, "All")
+  field(DOL1, "$(MTR_CTRL_PREFIX)Mtr.PREC CPP")
+  field(DOL2, "$(MTR_CTRL_PREFIX)Mtr.PREC")
+  field(DOL3, "$(MTR_CTRL_PREFIX)Mtr.PREC")
+  field(DOL4, "$(MTR_CTRL_PREFIX)Mtr.PREC")
+  field(DOL5, "$(MTR_CTRL_PREFIX)Mtr.PREC")
+  field(DOL6, "$(MTR_CTRL_PREFIX)Mtr.PREC")
+  field(LNK1, "$(P)$(R)FluorScrnPos-SP.PREC")
+  field(LNK2, "$(P)$(R)FluorScrnPos-RB.PREC")
+  field(LNK3, "$(P)$(R)CalScrnPos-SP.PREC")
+  field(LNK4, "$(P)$(R)CalScrnPos-RB.PREC")
+  field(LNK5, "$(P)$(R)AcceptedErr-SP.PREC")
+  field(LNK6, "$(P)$(R)AcceptedErr-RB.PREC")
+}
+

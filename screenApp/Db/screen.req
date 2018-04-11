@@ -1,0 +1,8 @@
+## This file specifies which PVs of the corresponding database should be saved.
+
+# Position of screens
+$(P)$(R)FluorScrnPos-SP
+$(P)$(R)CalScrnPos-SP
+
+# Position error tolerance
+$(P)$(R)AcceptedErr-SP
