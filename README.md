@@ -25,7 +25,7 @@ $ cd iocBoot/iocScreen &&
 $ ./runScreen.sh -m "MTR_CTRL_PREFIX" -c "CAM_PREFIX"
 ```
 
-where `MTR_CTRL_PREFIX` is the prefix used for the motion controller
+where `MTR_CTRL_PREFIX` is the prefix used for the motor controller
 IOC, and `CAM_PREFIX` is the prefix used for the camera IOC.
 The options that you can specify (after `./runScreen.sh`) are:
 
