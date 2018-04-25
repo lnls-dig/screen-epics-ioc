@@ -192,6 +192,27 @@ record(ai, "$(P)$(R)AcceptedErr-RB"){
 }
 
 #####################################################################
+# LED CONTROL
+#
+# Desc: Records for LED control.
+
+# Enable LEDs
+
+record(bo, "$(P)$(R)EnblLED-Sel"){
+  field(DESC, "Enable/disable LEDs")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(OUT, "$(P)DigOut0-Sel PP")
+}
+
+record(bi, "$(P)$(R)EnblLED-Sts"){
+  field(DESC, "LEDs Enable Sts")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(INP, "$(P)DigOut0-Sts CPP")
+}
+
+#####################################################################
 # EGU and PREC SETTINGS
 #
 # Desc: Engineering units and precision are
