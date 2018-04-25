@@ -1,6 +1,9 @@
 #!../../bin/linux-x86_64/screen
 
 < envPaths
+
+epicsEnvSet("TOP", "../..")
+
 < screen.config
 
 cd "${TOP}"
