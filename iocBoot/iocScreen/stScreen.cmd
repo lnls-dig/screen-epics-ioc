@@ -12,7 +12,7 @@ cd "${TOP}"
 dbLoadDatabase "dbd/screen.dbd"
 screen_registerRecordDeviceDriver pdbbase
 
-cd "${TOP}/iocBoot/${IOC}"
+cd "iocBoot/${IOC}"
 
 ## Load records
 
