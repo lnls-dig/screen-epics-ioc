@@ -196,13 +196,30 @@ record(ai, "$(P)$(R)AcceptedErr-RB"){
 #
 # Desc: Records for LED control.
 
-# Enable LEDs
+# LED Control Mode (Analog, Digital)
+
+record(bo, "$(P)$(R)LEDCtrlMode-Sel"){
+  field(DESC, "LED control mode")
+  field(ZNAM, "Analog")
+  field(ONAM, "OffOn")
+  field(FLNK, "$(P)$(R)LEDCtrlMode-Sts")
+}
+
+record(bi, "$(P)$(R)LEDCtrlMode-Sts"){
+  field(DESC, "LED control mode status")
+  field(ZNAM, "Analog")
+  field(ONAM, "OffOn")
+  field(INP, "$(P)$(R)LEDCtrlMode-Sel")
+  field(FLNK, "$(P)$(R)ConfigLEDCalc")
+}
+
+# Digital LED Control
 
 record(bo, "$(P)$(R)EnblLED-Sel"){
   field(DESC, "Enable/disable LEDs")
   field(ZNAM, "Off")
   field(ONAM, "On")
-  field(OUT, "$(P)DigOut0-Sel PP")
+  field(OUT, "$(P)$(R)ConfigLEDCalc.PROC PP")
 }
 
 record(bi, "$(P)$(R)EnblLED-Sts"){
@@ -210,6 +227,39 @@ record(bi, "$(P)$(R)EnblLED-Sts"){
   field(ZNAM, "Off")
   field(ONAM, "On")
   field(INP, "$(P)DigOut0-Sts CPP")
+}
+
+# Analog LED Control
+
+record(ao, "$(P)$(R)LEDPwrLvl-SP"){
+  field(DESC, "LED power level")
+  field(DRVH, "10")
+  field(DRVL, "0")
+  field(FLNK, "$(P)$(R)ConfigLEDCalc")
+}
+
+record(ai, "$(P)$(R)LEDPwrLvl-RB"){
+  field(DESC, "LED power level RB")
+  field(INP, "$(P)$(R)AnalogOut0-RB CPP")
+}
+
+# LED control auxiliar records
+
+record(calc, "$(P)$(R)ConfigLEDCalc"){
+  field(DESC, "Configure LED calc")
+  field(INPA, "$(P)$(R)LEDCtrlMode-Sts")
+  field(CALC, "A+1")
+  field(FLNK, "$(P)$(R)ConfigLED")
+}
+
+record(seq, "$(P)$(R)ConfigLED"){
+  field(DESC, "Configure LED")
+  field(SELM, "Specified")
+  field(SELL, "$(P)$(R)ConfigLEDCalc")
+  field(DOL1, "$(P)$(R)LEDPwrLvl-SP")
+  field(LNK1, "$(P)$(R)AnalogOut0-SP PP")
+  field(DOL2, "$(P)$(R)EnblLED-Sel")
+  field(LNK2, "$(P)DigOut0-Sel PP")
 }
 
 #####################################################################
