@@ -104,6 +104,42 @@ record(calcout, "$(P)$(R)GetCalScrnPosCalc"){
   field(OUT, "$(P)$(R)CalScrnPos-SP PP")                              # Transfer encoder position to stored position
 }
 
+# None screen position set point
+record(ao, "$(P)$(R)NoneScrnPos-SP"){
+  field(DESC, "Set none screen position")
+  field(PINI, "YES")
+  field(FLNK, "$(P)$(R)NoneScrnPos-RB")
+}
+
+# None screen position readback
+record(ai, "$(P)$(R)NoneScrnPos-RB"){
+  field(DESC, "None screen position RB")
+  field(ADEL, "-1")
+  field(MDEL, "-1")
+  field(INP, "$(P)$(R)NoneScrnPos-SP")
+}
+
+# Load none screen position with encoder readback value
+record(bo, "$(P)$(R)GetNoneScrnPos-Cmd"){
+  field(DESC, "Load none scrn pos with encoder read")
+  field(ONAM, "On")
+  field(ZNAM, "Off")
+  field(HIGH, "0.5")
+  field(FLNK, "$(P)$(R)GetNoneScrnPosCalc")
+}
+
+# Transfer encorder position (motor RBV) to none screen position
+record(calcout, "$(P)$(R)GetNoneScrnPosCalc"){
+  field(DESC, "Transfer encoder read to none scrn pos")
+  field(INPA, "$(MTR_CTRL_PREFIX)Mtr.RBV")
+  field(INPB, "$(P)$(R)GetNoneScrnPos-Cmd")
+  field(CALC, "B")                                                    # Command state
+  field(OCAL, "A")                                                    # Value to be transferred
+  field(OOPT, "When Non-zero")
+  field(DOPT, "Use OCAL")
+  field(OUT, "$(P)$(R)NoneScrnPos-SP PP")                            # Transfer encoder position to stored position
+}
+
 # Choose screen type, and place it in front of
 # the beam
 record(mbbo, "$(P)$(R)ScrnType-Sel"){
@@ -160,6 +196,16 @@ record(calcout, "$(P)$(R)ScrnTypeRead2"){
   field(INPD, "$(P)$(R)FluorScrnPos-RB")
   field(INPE, "$(P)$(R)AcceptedErr-RB")
   field(CALC, "A#0?A:((B<C+E)&&(B>C-E)?1:((B<D+E)&&(B>D-E)?2:0))")
+  field(FLNK, "$(P)$(R)ScrnTypeRead3")
+}
+
+record(calcout, "$(P)$(R)ScrnTypeRead3"){
+  field(DESC, "Screen type read calc 3")
+  field(INPA, "$(P)$(R)ScrnTypeRead2")
+  field(INPB, "$(MTR_CTRL_PREFIX)Mtr.RBV")
+  field(INPC, "$(P)$(R)NoneScrnPos-RB")
+  field(INPD, "$(P)$(R)AcceptedErr-RB")
+  field(CALC, "A#0?A:((B<C+D)&&(B>C-D)?0:3)")
   field(OUT, "$(P)$(R)ScrnType-Sts PP")
 }
 
@@ -172,6 +218,9 @@ record(mbbi, "$(P)$(R)ScrnType-Sts"){
   field(ONST, "Calibration")
   field(TWVL, "2")
   field(TWST, "Fluorescent")
+  field(THVL, "3")
+  field(THST, "Unknown")
+  field(VAL, "3")
 }
 
 # Accepted Screen position error when
