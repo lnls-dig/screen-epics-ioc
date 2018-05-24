@@ -167,10 +167,10 @@ record(seq, "$(P)$(R)ScrnTypeConfig"){
   field(DESC, "Move motor to selected scrn type pos")
   field(SELM, "Specified")
   field(SELL, "$(P)$(R)ScrnTypeCalc")
-  field(DO1, "1")
+  field(DOL1, "$(P)$(R)NoneScrnPos-RB")
   field(DOL2, "$(P)$(R)CalScrnPos-RB")
   field(DOL3, "$(P)$(R)FluorScrnPos-RB")
-  field(LNK1, "$(MTR_CTRL_PREFIX)HomeToLimSw-Cmd PP")
+  field(LNK1, "$(MTR_CTRL_PREFIX)AbsPos-SP PP")
   field(LNK2, "$(MTR_CTRL_PREFIX)AbsPos-SP PP")
   field(LNK3, "$(MTR_CTRL_PREFIX)AbsPos-SP PP")
 }
