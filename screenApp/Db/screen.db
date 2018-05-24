@@ -240,7 +240,7 @@ record(ao, "$(P)$(R)LEDPwrLvl-SP"){
 
 record(ai, "$(P)$(R)LEDPwrLvl-RB"){
   field(DESC, "LED power level RB")
-  field(INP, "$(P)$(R)AnalogOut0-RB CPP")
+  field(INP, "$(P)$(R)AnalogOut1-RB CPP")
 }
 
 # LED control auxiliar records
@@ -257,7 +257,7 @@ record(seq, "$(P)$(R)ConfigLED"){
   field(SELM, "Specified")
   field(SELL, "$(P)$(R)ConfigLEDCalc")
   field(DOL1, "$(P)$(R)LEDPwrLvl-SP")
-  field(LNK1, "$(P)$(R)AnalogOut0-SP PP")
+  field(LNK1, "$(P)$(R)AnalogOut1-SP PP")
   field(DOL2, "$(P)$(R)EnblLED-Sel")
   field(LNK2, "$(P)DigOut0-Sel PP")
 }
