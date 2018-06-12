@@ -252,14 +252,15 @@ record(bo, "$(P)$(R)EnblLED-Sel"){
   field(PINI, "YES")
   field(ZNAM, "Off")
   field(ONAM, "On")
-  field(FLNK, "$(P)$(R)ConfigLEDCalc")
+  field(FLNK, "$(P)$(R)ConfigLED-Sts")
 }
 
 record(bi, "$(P)$(R)EnblLED-Sts"){
   field(DESC, "LEDs Enable Sts")
   field(ZNAM, "Off")
   field(ONAM, "On")
-  field(INP, "$(P)$(R)EnblLEDReadCalc")
+  field(INP, "$(P)$(R)EnblLED-Sel")
+  field(FLNK, "$(P)$(R)ConfigLEDCalc")
 }
 
 # Analog LED Control
@@ -282,15 +283,8 @@ record(calcout, "$(P)$(R)ConfigLEDCalc"){
   field(DESC, "Configure LED calc")
   field(INPA, "$(P)$(R)EnblLED-Sel")
   field(INPB, "$(P)$(R)LEDPwrLvl-SP")
-  field(CALC, "A?0:B")
+  field(CALC, "A?B:0")
   field(OUT, "$(P)$(R)AnalogOut1-SP PP")
-}
-
-record(calc, "$(P)$(R)EnblLEDReadCalc"){
-  field(DESC, "Update LED enable status calc")
-  field(INPA, "$(P)$(R)AnalogOut1-RB CPP")
-  field(CALC, "A=0?0:1")
-  field(FLNK, "$(P)EnblLED-Sts")
 }
 
 #####################################################################
