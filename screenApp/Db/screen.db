@@ -240,6 +240,15 @@ record(ai, "$(P)$(R)AcceptedErr-RB"){
   field(MDEL, "-1")
 }
 
+# Provide low level 'DoneMov-Mon' (Done Moving) PV to high level
+record(bi, "$(P)$(R)DoneMov-Mon"){
+  field(DESC, "Motor is done moving")
+  field(ZNAM, "No")
+  field(ONAM, "Yes")
+  field(VAL, "1")
+  field(INP, "$(MTR_CTRL_PREFIX)DoneMov-Mon CPP")
+}
+
 #####################################################################
 # LED CONTROL
 #
