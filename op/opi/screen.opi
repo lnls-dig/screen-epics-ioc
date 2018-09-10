@@ -18,10 +18,6 @@
   <height>1024</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <P>test:</P>
-    <R>scrn:</R>
-    <MTR_CTRL_PREFIX>test:dmc:</MTR_CTRL_PREFIX>
-    <CAM_PREFIX>test:basler:</CAM_PREFIX>
   </macros>
   <name></name>
   <rules />
@@ -626,7 +622,7 @@ $(pv_value)</tooltip>
       <page_increment>10.0</page_increment>
       <precision>3</precision>
       <precision_from_pv>false</precision_from_pv>
-      <pv_name>$(CAM_PREFIX)AOIOffsetX-SP</pv_name>
+      <pv_name>$(P)$(R)ImgROIOffsetX-SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -680,7 +676,7 @@ $(pv_value)</tooltip>
       <page_increment>10.0</page_increment>
       <precision>3</precision>
       <precision_from_pv>false</precision_from_pv>
-      <pv_name>$(CAM_PREFIX)AOIOffsetY-SP</pv_name>
+      <pv_name>$(P)$(R)ImgROIOffsetY-SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -734,7 +730,7 @@ $(pv_value)</tooltip>
       <page_increment>10.0</page_increment>
       <precision>3</precision>
       <precision_from_pv>false</precision_from_pv>
-      <pv_name>$(CAM_PREFIX)AOIWidth-SP</pv_name>
+      <pv_name>$(P)$(R)ImgROIWidth-SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -788,7 +784,7 @@ $(pv_value)</tooltip>
       <page_increment>10.0</page_increment>
       <precision>3</precision>
       <precision_from_pv>false</precision_from_pv>
-      <pv_name>$(CAM_PREFIX)AOIHeight-SP</pv_name>
+      <pv_name>$(P)$(R)ImgROIHeight-SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -837,7 +833,7 @@ $(pv_value)</tooltip>
       <name>Text Update_15</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(CAM_PREFIX)AOIOffsetX-RB</pv_name>
+      <pv_name>$(P)$(R)ImgROIOffsetX-RB</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -889,7 +885,7 @@ $(pv_value)</tooltip>
       <name>Text Update_16</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(CAM_PREFIX)AOIOffsetY-RB</pv_name>
+      <pv_name>$(P)$(R)ImgROIOffsetY-RB</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -941,7 +937,7 @@ $(pv_value)</tooltip>
       <name>Text Update_17</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(CAM_PREFIX)AOIWidth-RB</pv_name>
+      <pv_name>$(P)$(R)ImgROIWidth-RB</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -993,7 +989,7 @@ $(pv_value)</tooltip>
       <name>Text Update_18</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(CAM_PREFIX)AOIHeight-RB</pv_name>
+      <pv_name>$(P)$(R)ImgROIHeight-RB</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -1054,7 +1050,7 @@ $(pv_value)</tooltip>
       <on_label>ON</on_label>
       <password></password>
       <push_action_index>0</push_action_index>
-      <pv_name>$(CAM_PREFIX)AOIAutoCenterX-Sel</pv_name>
+      <pv_name>$(P)$(R)ImgROIAutoCenterX-Sel</pv_name>
       <pv_value />
       <released_action_index>0</released_action_index>
       <rules />
@@ -1156,7 +1152,7 @@ $(pv_value)</tooltip>
         <color red="0" green="255" blue="0" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name>$(CAM_PREFIX)AOIAutoCenterX-Sts</pv_name>
+      <pv_name>$(P)$(R)ImgROIAutoCenterX-Sts</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -1213,7 +1209,7 @@ $(pv_value)</tooltip>
       <on_label>ON</on_label>
       <password></password>
       <push_action_index>0</push_action_index>
-      <pv_name>$(CAM_PREFIX)AOIAutoCenterY-Sel</pv_name>
+      <pv_name>$(P)$(R)ImgROIAutoCenterY-Sel</pv_name>
       <pv_value />
       <released_action_index>0</released_action_index>
       <rules />
@@ -1315,7 +1311,7 @@ $(pv_value)</tooltip>
         <color red="0" green="255" blue="0" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name>$(CAM_PREFIX)AOIAutoCenterY-Sts</pv_name>
+      <pv_name>$(P)$(R)ImgROIAutoCenterY-Sts</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -1355,7 +1351,7 @@ $(pv_value)</tooltip>
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <height>259</height>
-    <lock_children>true</lock_children>
+    <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
@@ -1806,7 +1802,7 @@ $(pv_value)</tooltip>
         <color red="0" green="255" blue="0" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name>$(MTR_CTRL_PREFIX)DoneMov-Mon</pv_name>
+      <pv_name>$(P)$(R)DoneMov-Mon</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -4212,7 +4208,7 @@ $(pv_value)</tooltip>
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <height>192</height>
-    <lock_children>false</lock_children>
+    <lock_children>true</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
@@ -4924,7 +4920,7 @@ $(pv_value)</tooltip>
       <name>Text Update_10</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name></pv_name>
+      <pv_name>$(P)$(R)CenterXDimFei-Mon</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -4976,7 +4972,7 @@ $(pv_value)</tooltip>
       <name>Text Update_11</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name></pv_name>
+      <pv_name>$(P)$(R)CenterYDimFei-Mon</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -5110,7 +5106,7 @@ $(pv_value)</tooltip>
       <name>Text Update_12</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name></pv_name>
+      <pv_name>$(P)$(R)SigmaXDimFei-Mon</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -5203,7 +5199,7 @@ $(pv_value)</tooltip>
       <name>Text Update_13</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name></pv_name>
+      <pv_name>$(P)$(R)SigmaYDimFei-Mon</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -5296,7 +5292,7 @@ $(pv_value)</tooltip>
       <name>Text Update_14</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name></pv_name>
+      <pv_name>$(P)$(R)ThetaDimFei-Mon</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -5480,7 +5476,7 @@ $(pv_value)</tooltip>
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <height>301</height>
-    <lock_children>false</lock_children>
+    <lock_children>true</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
@@ -5851,7 +5847,7 @@ $(pv_value)</tooltip>
       <page_increment>10.0</page_increment>
       <precision>3</precision>
       <precision_from_pv>false</precision_from_pv>
-      <pv_name>$(CAM_PREFIX)ExposureTime-SP</pv_name>
+      <pv_name>$(P)$(R)CamExposureTime-SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -5905,7 +5901,7 @@ $(pv_value)</tooltip>
       <page_increment>10.0</page_increment>
       <precision>3</precision>
       <precision_from_pv>false</precision_from_pv>
-      <pv_name>$(CAM_PREFIX)AcqPeriod-SP</pv_name>
+      <pv_name>$(P)$(R)CamAcqPeriod-SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -5954,7 +5950,7 @@ $(pv_value)</tooltip>
       <name>Text Update_15</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(CAM_PREFIX)ExposureTime-RB</pv_name>
+      <pv_name>$(P)$(R)CamExposureTime-RB</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -6006,7 +6002,7 @@ $(pv_value)</tooltip>
       <name>Text Update_16</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(CAM_PREFIX)AcqPeriod-RB</pv_name>
+      <pv_name>$(P)$(R)CamAcqPeriod-RB</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -6067,7 +6063,7 @@ $(pv_value)</tooltip>
       <on_label>ON</on_label>
       <password></password>
       <push_action_index>0</push_action_index>
-      <pv_name>$(CAM_PREFIX)Enbl-Sel</pv_name>
+      <pv_name>$(P)$(R)CamEnbl-Sel</pv_name>
       <pv_value />
       <released_action_index>0</released_action_index>
       <rules />
@@ -6169,7 +6165,7 @@ $(pv_value)</tooltip>
         <color red="0" green="255" blue="0" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name>$(CAM_PREFIX)Enbl-Sts</pv_name>
+      <pv_name>$(P)$(R)CamEnbl-Sts</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -6214,7 +6210,7 @@ $(pv_value)</tooltip>
       <horizontal>true</horizontal>
       <items_from_pv>true</items_from_pv>
       <name>Choice Button</name>
-      <pv_name>$(CAM_PREFIX)AcqMode-Sel</pv_name>
+      <pv_name>$(P)$(R)CamAcqMode-Sel</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -6263,7 +6259,7 @@ $(pv_value)</tooltip>
       <name>Text Update_17</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(CAM_PREFIX)AcqMode-Sts</pv_name>
+      <pv_name>$(P)$(R)CamAcqMode-Sts</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -6312,7 +6308,7 @@ $(pv_value)</tooltip>
       <horizontal>true</horizontal>
       <items_from_pv>true</items_from_pv>
       <name>Choice Button_1</name>
-      <pv_name>$(CAM_PREFIX)ExposureMode-Sel</pv_name>
+      <pv_name>$(P)$(R)CamExposureMode-Sel</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -6361,7 +6357,7 @@ $(pv_value)</tooltip>
       <name>Text Update_18</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(CAM_PREFIX)ExposureMode-Sts</pv_name>
+      <pv_name>$(P)$(R)CamExposureMode-Sts</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -6458,7 +6454,7 @@ $(pv_value)</tooltip>
       <page_increment>10.0</page_increment>
       <precision>3</precision>
       <precision_from_pv>false</precision_from_pv>
-      <pv_name>$(CAM_PREFIX)Gain-SP</pv_name>
+      <pv_name>$(P)$(R)CamGain-SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -6507,7 +6503,7 @@ $(pv_value)</tooltip>
       <name>Text Update_19</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(CAM_PREFIX)Gain-RB</pv_name>
+      <pv_name>$(P)$(R)CamGain-RB</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -6608,7 +6604,7 @@ $(pv_value)</tooltip>
       <on_label>ON</on_label>
       <password></password>
       <push_action_index>0</push_action_index>
-      <pv_name>$(CAM_PREFIX)AutoGain-Cmd</pv_name>
+      <pv_name>$(P)$(R)CamAutoGain-Cmd</pv_name>
       <pv_value />
       <released_action_index>0</released_action_index>
       <rules />
@@ -7247,6 +7243,28 @@ $(pv_value)</tooltip>
     <anti_alias>true</anti_alias>
     <arrow_length>5</arrow_length>
     <arrows>2</arrows>
+    <fill_arrow>true</fill_arrow>
+    <line_color>
+      <color red="0" green="0" blue="0" />
+    </line_color>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>connection</name>
+    <points />
+    <router>0</router>
+    <src_path>6e34871b:162f3391a85:-1d61</src_path>
+    <src_term>BOTTOM</src_term>
+    <src_wuid>6e34871b:162f3391a85:-2654</src_wuid>
+    <tgt_path>6e34871b:162f3391a85:-1d61</tgt_path>
+    <tgt_term>RIGHT</tgt_term>
+    <tgt_wuid>-121d7f33:1646036f9e2:-6ece</tgt_wuid>
+    <widget_type>connection</widget_type>
+    <wuid>-121d7f33:1646036f9e2:-6e9c</wuid>
+  </connection>
+  <connection typeId="org.csstudio.opibuilder.connection" version="1.0.0">
+    <anti_alias>true</anti_alias>
+    <arrow_length>5</arrow_length>
+    <arrows>2</arrows>
     <fill_arrow>false</fill_arrow>
     <line_color>
       <color red="0" green="0" blue="0" />
@@ -7280,34 +7298,12 @@ $(pv_value)</tooltip>
     <router>1</router>
     <src_path>6e34871b:162f3391a85:-1d61</src_path>
     <src_term>LEFT</src_term>
-    <src_wuid>6e34871b:162f3391a85:-2654</src_wuid>
+    <src_wuid>6e34871b:162f3391a85:-17</src_wuid>
     <tgt_path>6e34871b:162f3391a85:-1d61</tgt_path>
     <tgt_term>RIGHT</tgt_term>
-    <tgt_wuid>6e34871b:162f3391a85:-26d3</tgt_wuid>
+    <tgt_wuid>6e34871b:162f3391a85:-2654</tgt_wuid>
     <widget_type>connection</widget_type>
-    <wuid>6e34871b:162f3391a85:-17cc</wuid>
-  </connection>
-  <connection typeId="org.csstudio.opibuilder.connection" version="1.0.0">
-    <anti_alias>true</anti_alias>
-    <arrow_length>5</arrow_length>
-    <arrows>2</arrows>
-    <fill_arrow>true</fill_arrow>
-    <line_color>
-      <color red="0" green="0" blue="0" />
-    </line_color>
-    <line_style>0</line_style>
-    <line_width>1</line_width>
-    <name>connection</name>
-    <points />
-    <router>0</router>
-    <src_path>6e34871b:162f3391a85:-1d61</src_path>
-    <src_term>BOTTOM</src_term>
-    <src_wuid>6e34871b:162f3391a85:-2654</src_wuid>
-    <tgt_path>6e34871b:162f3391a85:-1d61</tgt_path>
-    <tgt_term>RIGHT</tgt_term>
-    <tgt_wuid>-121d7f33:1646036f9e2:-6ece</tgt_wuid>
-    <widget_type>connection</widget_type>
-    <wuid>-121d7f33:1646036f9e2:-6e9c</wuid>
+    <wuid>6e34871b:162f3391a85:-15</wuid>
   </connection>
   <connection typeId="org.csstudio.opibuilder.connection" version="1.0.0">
     <anti_alias>true</anti_alias>
@@ -7324,11 +7320,11 @@ $(pv_value)</tooltip>
     <router>1</router>
     <src_path>6e34871b:162f3391a85:-1d61</src_path>
     <src_term>LEFT</src_term>
-    <src_wuid>6e34871b:162f3391a85:-17</src_wuid>
+    <src_wuid>6e34871b:162f3391a85:-2654</src_wuid>
     <tgt_path>6e34871b:162f3391a85:-1d61</tgt_path>
     <tgt_term>RIGHT</tgt_term>
-    <tgt_wuid>6e34871b:162f3391a85:-2654</tgt_wuid>
+    <tgt_wuid>6e34871b:162f3391a85:-26d3</tgt_wuid>
     <widget_type>connection</widget_type>
-    <wuid>6e34871b:162f3391a85:-15</wuid>
+    <wuid>6e34871b:162f3391a85:-17cc</wuid>
   </connection>
 </display>
