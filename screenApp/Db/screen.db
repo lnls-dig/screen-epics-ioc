@@ -276,24 +276,65 @@ record(bi, "$(P)$(R)EnblLED-Sts"){
 
 record(ao, "$(P)$(R)LEDPwrLvl-SP"){
   field(DESC, "LED power level")
-  field(DRVH, "10")
+  field(DRVH, "100")
   field(DRVL, "0")
   field(FLNK, "$(P)$(R)ConfigLEDCalc")
 }
 
-record(ai, "$(P)$(R)LEDPwrLvl-RB"){
+# LEDLevel = 1/scaleFactor * ln(Vin / Vthold)
+record(calc, "$(P)$(R)LEDPwrLvl-RB"){
   field(DESC, "LED power level RB")
-  field(INP, "$(P)$(R)AnalogOut1-RB CPP")
+  field(INPA, "$(P)$(R)AnalogOut1-RB CPP")
+  field(INPB, "$(P)$(R)LEDThold-SP CPP")
+  field(INPC, "$(P)$(R)LEDPwrScaleFactor-SP CPP")
+  field(CALC, "(abs(A)<B)?0:((1/C)*loge(abs(A/B)))")
 }
 
 # LED control auxiliar records
 
+# vout = Vthold * exp(LEDLevel * scaleFactor)
 record(calcout, "$(P)$(R)ConfigLEDCalc"){
   field(DESC, "Configure LED calc")
   field(INPA, "$(P)$(R)EnblLED-Sel")
   field(INPB, "$(P)$(R)LEDPwrLvl-SP")
-  field(CALC, "A?B:0")
+  field(INPC, "$(P)$(R)LEDThold-SP")
+  field(INPD, "$(P)$(R)LEDPwrScaleFactor-SP")
+  field(CALC, "A?(abs(C)*exp(abs(B*D))):0")
   field(OUT, "$(P)$(R)AnalogOut1-SP PP")
+}
+
+# LED Power Minimum Threshold
+record(ao, "$(P)$(R)LEDThold-SP"){
+  field(DESC, "LED power min threshold")
+  field(PINI, "YES")
+  field(EGU, "V")
+  field(DRVH, "10")
+  field(DRVL, "0")
+  field(VAL, "2.5")
+  field(FLNK, "$(P)$(R)LEDThold-RB")
+}
+
+record(ai, "$(P)$(R)LEDThold-RB"){
+  field(DESC, "LED power min threshold RB")
+  field(EGU, "V")
+  field(INP, "$(P)$(R)LEDThold-SP")
+  field(FLNK, "$(P)$(R)ConfigLEDCalc")
+}
+
+# LED Power Level Conversion Scale Factor
+record(ao, "$(P)$(R)LEDPwrScaleFactor-SP"){
+  field(DESC, "LED volt = thold*exp(level*FACTOR)")
+  field(PINI, "YES")
+  field(DRVH, "0.02")
+  field(DRVL, "0.000001")
+  field(VAL, "0.011")
+  field(FLNK, "$(P)$(R)LEDPwrScaleFactor-RB")
+}
+
+record(ai, "$(P)$(R)LEDPwrScaleFactor-RB"){
+  field(DESC, "LED volt = thold*exp(level*FACTOR)")
+  field(INP, "$(P)$(R)LEDPwrScaleFactor-SP")
+  field(FLNK, "$(P)$(R)ConfigLEDCalc")
 }
 
 #####################################################################

@@ -6,3 +6,15 @@ $(P)$(R)CalScrnPos-SP
 
 # Position error tolerance
 $(P)$(R)AcceptedErr-SP
+
+# LED Enbl
+$(P)$(R)EnblLED-Sel
+
+# LED Power Level
+$(P)$(R)LEDPwrLvl-SP
+
+# LED Level Threshold
+$(P)$(R)LEDThold-SP
+
+# LED Level Conversion Factor
+$(P)$(R)LEDPwrScaleFactor-SP
