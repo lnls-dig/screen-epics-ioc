@@ -278,12 +278,14 @@ record(ao, "$(P)$(R)LEDPwrLvl-SP"){
   field(DESC, "LED power level")
   field(DRVH, "100")
   field(DRVL, "0")
+  field(EGU, "%")
   field(FLNK, "$(P)$(R)ConfigLEDCalc")
 }
 
 # LEDLevel = 1/scaleFactor * ln(Vin / Vthold)
 record(calc, "$(P)$(R)LEDPwrLvl-RB"){
   field(DESC, "LED power level RB")
+  field(EGU, "%")
   field(INPA, "$(P)$(R)AnalogOut1-RB CPP")
   field(INPB, "$(P)$(R)LEDThold-SP CPP")
   field(INPC, "$(P)$(R)LEDPwrScaleFactor-SP CPP")
