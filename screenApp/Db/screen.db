@@ -261,7 +261,7 @@ record(bo, "$(P)$(R)EnblLED-Sel"){
   field(PINI, "YES")
   field(ZNAM, "Off")
   field(ONAM, "On")
-  field(FLNK, "$(P)$(R)ConfigLED-Sts")
+  field(FLNK, "$(P)$(R)EnblLED-Sts")
 }
 
 record(bi, "$(P)$(R)EnblLED-Sts"){
@@ -286,7 +286,7 @@ record(ao, "$(P)$(R)LEDPwrLvl-SP"){
 record(calc, "$(P)$(R)LEDPwrLvl-RB"){
   field(DESC, "LED power level RB")
   field(EGU, "%")
-  field(INPA, "$(P)$(R)AnalogOut1-RB CPP")
+  field(INPA, "$(MTR_CTRL_PREFIX)AnalogOut1-RB CPP")
   field(INPB, "$(P)$(R)LEDThold-SP CPP")
   field(INPC, "$(P)$(R)LEDPwrScaleFactor-SP CPP")
   field(CALC, "(abs(A)<B)?0:((1/C)*loge(abs(A/B)))")
@@ -302,7 +302,7 @@ record(calcout, "$(P)$(R)ConfigLEDCalc"){
   field(INPC, "$(P)$(R)LEDThold-SP")
   field(INPD, "$(P)$(R)LEDPwrScaleFactor-SP")
   field(CALC, "A?(abs(C)*exp(abs(B*D))):0")
-  field(OUT, "$(P)$(R)AnalogOut1-SP PP")
+  field(OUT, "$(MTR_CTRL_PREFIX)AnalogOut1-SP PP")
 }
 
 # LED Power Minimum Threshold
@@ -310,6 +310,7 @@ record(ao, "$(P)$(R)LEDThold-SP"){
   field(DESC, "LED power min threshold")
   field(PINI, "YES")
   field(EGU, "V")
+  field(PREC, "4")
   field(DRVH, "10")
   field(DRVL, "0")
   field(VAL, "2.5")
@@ -319,14 +320,16 @@ record(ao, "$(P)$(R)LEDThold-SP"){
 record(ai, "$(P)$(R)LEDThold-RB"){
   field(DESC, "LED power min threshold RB")
   field(EGU, "V")
+  field(PREC, "4")
   field(INP, "$(P)$(R)LEDThold-SP")
   field(FLNK, "$(P)$(R)ConfigLEDCalc")
 }
 
 # LED Power Level Conversion Scale Factor
 record(ao, "$(P)$(R)LEDPwrScaleFactor-SP"){
-  field(DESC, "LED volt = thold*exp(level*FACTOR)")
+  field(DESC, "LEDVolt = thold*exp(level*FACTOR)")
   field(PINI, "YES")
+  field(PREC, "6")
   field(DRVH, "0.02")
   field(DRVL, "0.000001")
   field(VAL, "0.011")
@@ -334,7 +337,8 @@ record(ao, "$(P)$(R)LEDPwrScaleFactor-SP"){
 }
 
 record(ai, "$(P)$(R)LEDPwrScaleFactor-RB"){
-  field(DESC, "LED volt = thold*exp(level*FACTOR)")
+  field(DESC, "LEDVolt = thold*exp(level*FACTOR)")
+  field(PREC, "6")
   field(INP, "$(P)$(R)LEDPwrScaleFactor-SP")
   field(FLNK, "$(P)$(R)ConfigLEDCalc")
 }
