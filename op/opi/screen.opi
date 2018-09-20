@@ -18,6 +18,8 @@
   <height>1024</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
+    <P>test:s:</P>
+    <R></R>
   </macros>
   <name></name>
   <rules />
@@ -1908,7 +1910,7 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>320</width>
+      <width>269</width>
       <wrap_words>false</wrap_words>
       <wuid>6e34871b:162f3391a85:-1d52</wuid>
       <x>14</x>
@@ -2090,7 +2092,7 @@ $(pv_value)</tooltip>
       <width>65</width>
       <wrap_words>false</wrap_words>
       <wuid>6e34871b:162f3391a85:b9e</wuid>
-      <x>266</x>
+      <x>338</x>
       <y>90</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -2252,94 +2254,6 @@ $(pv_value)</tooltip>
       <x>387</x>
       <y>62</y>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.scaledslider" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <alarm_pulsing>false</alarm_pulsing>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color red="240" green="240" blue="240" />
-      </background_color>
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <border_color>
-        <color red="0" green="128" blue="255" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <color_fillbackground>
-        <color red="200" green="200" blue="200" />
-      </color_fillbackground>
-      <color_hi>
-        <color red="255" green="128" blue="0" />
-      </color_hi>
-      <color_hihi>
-        <color red="255" green="0" blue="0" />
-      </color_hihi>
-      <color_lo>
-        <color red="255" green="128" blue="0" />
-      </color_lo>
-      <color_lolo>
-        <color red="255" green="0" blue="0" />
-      </color_lolo>
-      <effect_3d>true</effect_3d>
-      <enabled>true</enabled>
-      <fill_color>
-        <color red="0" green="0" blue="255" />
-      </fill_color>
-      <font>
-        <opifont.name fontName="Ubuntu" height="11" style="0">Default</opifont.name>
-      </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <foreground_color>
-        <color red="0" green="0" blue="0" />
-      </foreground_color>
-      <height>102</height>
-      <horizontal>false</horizontal>
-      <level_hi>80.0</level_hi>
-      <level_hihi>90.0</level_hihi>
-      <level_lo>20.0</level_lo>
-      <level_lolo>10.0</level_lolo>
-      <limits_from_pv>true</limits_from_pv>
-      <log_scale>false</log_scale>
-      <major_tick_step_hint>25</major_tick_step_hint>
-      <maximum>100.0</maximum>
-      <minimum>0.0</minimum>
-      <name>Scaled Slider</name>
-      <page_increment>10.0</page_increment>
-      <pv_name>$(P)$(R)LEDPwrLvl-SP</pv_name>
-      <pv_value />
-      <rules />
-      <scale_font>
-        <opifont.name fontName="Ubuntu" height="9" style="0">Fine Print</opifont.name>
-      </scale_font>
-      <scale_format></scale_format>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <show_hi>false</show_hi>
-      <show_hihi>false</show_hihi>
-      <show_lo>false</show_lo>
-      <show_lolo>false</show_lolo>
-      <show_markers>true</show_markers>
-      <show_minor_ticks>false</show_minor_ticks>
-      <show_scale>true</show_scale>
-      <step_increment>1.0</step_increment>
-      <thumb_color>
-        <color red="172" green="172" blue="172" />
-      </thumb_color>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <transparent_background>true</transparent_background>
-      <value_label_format></value_label_format>
-      <visible>true</visible>
-      <widget_type>Scaled Slider</widget_type>
-      <width>89</width>
-      <wuid>-121d7f33:1646036f9e2:-498c</wuid>
-      <x>318</x>
-      <y>93</y>
-    </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <alarm_pulsing>false</alarm_pulsing>
@@ -2389,7 +2303,7 @@ $(pv_value)</tooltip>
       <width>65</width>
       <wrap_words>false</wrap_words>
       <wuid>-121d7f33:1646036f9e2:-47b5</wuid>
-      <x>266</x>
+      <x>338</x>
       <y>112</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
@@ -2446,7 +2360,7 @@ $(pv_value)</tooltip>
       <widget_type>Text Input</widget_type>
       <width>65</width>
       <wuid>-fc609f:165ca177966:-31e</wuid>
-      <x>266</x>
+      <x>338</x>
       <y>153</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -2486,7 +2400,7 @@ $(pv_value)</tooltip>
       <width>65</width>
       <wrap_words>false</wrap_words>
       <wuid>-fc609f:165ca177966:-31a</wuid>
-      <x>266</x>
+      <x>338</x>
       <y>135</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -2526,7 +2440,7 @@ $(pv_value)</tooltip>
       <width>79</width>
       <wrap_words>false</wrap_words>
       <wuid>-fc609f:165ca177966:-314</wuid>
-      <x>259</x>
+      <x>331</x>
       <y>175</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
@@ -2583,8 +2497,96 @@ $(pv_value)</tooltip>
       <widget_type>Text Input</widget_type>
       <width>65</width>
       <wuid>-fc609f:165ca177966:-310</wuid>
-      <x>266</x>
+      <x>338</x>
       <y>194</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.scaledslider" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <color_fillbackground>
+        <color red="200" green="200" blue="200" />
+      </color_fillbackground>
+      <color_hi>
+        <color red="255" green="128" blue="0" />
+      </color_hi>
+      <color_hihi>
+        <color red="255" green="0" blue="0" />
+      </color_hihi>
+      <color_lo>
+        <color red="255" green="128" blue="0" />
+      </color_lo>
+      <color_lolo>
+        <color red="255" green="0" blue="0" />
+      </color_lolo>
+      <effect_3d>true</effect_3d>
+      <enabled>true</enabled>
+      <fill_color>
+        <color red="0" green="0" blue="255" />
+      </fill_color>
+      <font>
+        <opifont.name fontName="Ubuntu" height="11" style="0">Default</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>130</height>
+      <horizontal>false</horizontal>
+      <level_hi>80.0</level_hi>
+      <level_hihi>90.0</level_hihi>
+      <level_lo>20.0</level_lo>
+      <level_lolo>10.0</level_lolo>
+      <limits_from_pv>false</limits_from_pv>
+      <log_scale>false</log_scale>
+      <major_tick_step_hint>20</major_tick_step_hint>
+      <maximum>100.0</maximum>
+      <minimum>0.0</minimum>
+      <name>Scaled Slider</name>
+      <page_increment>10.0</page_increment>
+      <pv_name>$(P)$(R)LEDPwrLvl-SP</pv_name>
+      <pv_value />
+      <rules />
+      <scale_font>
+        <opifont.name fontName="Ubuntu" height="9" style="0">Fine Print</opifont.name>
+      </scale_font>
+      <scale_format></scale_format>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_hi>false</show_hi>
+      <show_hihi>false</show_hihi>
+      <show_lo>false</show_lo>
+      <show_lolo>false</show_lolo>
+      <show_markers>true</show_markers>
+      <show_minor_ticks>false</show_minor_ticks>
+      <show_scale>true</show_scale>
+      <step_increment>0.01</step_increment>
+      <thumb_color>
+        <color red="172" green="172" blue="172" />
+      </thumb_color>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <transparent_background>true</transparent_background>
+      <value_label_format></value_label_format>
+      <visible>true</visible>
+      <widget_type>Scaled Slider</widget_type>
+      <width>89</width>
+      <wuid>-121d7f33:1646036f9e2:-498c</wuid>
+      <x>245</x>
+      <y>90</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
