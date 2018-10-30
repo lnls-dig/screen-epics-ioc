@@ -36,6 +36,8 @@ record(stringout, "$(P)$(R)CamPrefix-Cte"){
 record(ao, "$(P)$(R)FluorScrnPos-SP"){
   field(DESC, "Set fluorescent screen position")
   field(PINI, "YES")
+  field(DRVH, "1000")
+  field(DRVL, "-1000")
   field(FLNK, "$(P)$(R)FluorScrnPos-RB")
 }
 
@@ -72,6 +74,8 @@ record(calcout, "$(P)$(R)GetFluorScrnPosCalc"){
 record(ao, "$(P)$(R)CalScrnPos-SP"){
   field(DESC, "Set calibration screen position")
   field(PINI, "YES")
+  field(DRVH, "1000")
+  field(DRVL, "-1000")
   field(FLNK, "$(P)$(R)CalScrnPos-RB")
 }
 
@@ -108,6 +112,8 @@ record(calcout, "$(P)$(R)GetCalScrnPosCalc"){
 record(ao, "$(P)$(R)NoneScrnPos-SP"){
   field(DESC, "Set none screen position")
   field(PINI, "YES")
+  field(DRVH, "1000")
+  field(DRVL, "-1000")
   field(FLNK, "$(P)$(R)NoneScrnPos-RB")
 }
 
@@ -228,6 +234,8 @@ record(mbbi, "$(P)$(R)ScrnType-Sts"){
 record(ao, "$(P)$(R)AcceptedErr-SP"){
   field(DESC, "Screen pos error tolerance")
   field(PINI, "YES")
+  field(DRVH, "1000")
+  field(DRVL, "-1000")
   field(VAL, "1")
   field(FLNK, "$(P)$(R)AcceptedErr-RB")
 }
