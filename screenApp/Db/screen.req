@@ -3,6 +3,10 @@
 # Position of screens
 $(P)$(R)FluorScrnPos-SP
 $(P)$(R)CalScrnPos-SP
+$(P)$(R)NoneScrnPos-SP
+
+# Screen Type
+$(P)$(R)ScrnType-Sel
 
 # Position error tolerance
 $(P)$(R)AcceptedErr-SP
