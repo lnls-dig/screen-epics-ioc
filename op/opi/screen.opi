@@ -1602,7 +1602,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <text>Low Limit Switch</text>
+      <text>Low Limit Sw</text>
       <tooltip></tooltip>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -1642,7 +1642,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <text>High Limit Switch</text>
+      <text>High Limit Sw</text>
       <tooltip></tooltip>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -2873,7 +2873,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <format_type>0</format_type>
       <height>20</height>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update_15</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
@@ -3145,7 +3145,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <text>Encoder Position</text>
+      <text>Enc Position</text>
       <tooltip></tooltip>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -3427,7 +3427,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <format>0</format>
       <height>25</height>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <horizontal_buttons_layout>false</horizontal_buttons_layout>
       <limits_from_pv>false</limits_from_pv>
       <maximum>1.7976931348623157E308</maximum>
@@ -3486,7 +3486,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <text>Absolute Position</text>
+      <text>Abs Position</text>
       <tooltip></tooltip>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -3522,7 +3522,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <format_type>0</format_type>
       <height>20</height>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update_3</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
@@ -3574,7 +3574,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <format>0</format>
       <height>25</height>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <horizontal_buttons_layout>false</horizontal_buttons_layout>
       <limits_from_pv>false</limits_from_pv>
       <maximum>1.7976931348623157E308</maximum>
@@ -3629,7 +3629,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <format_type>0</format_type>
       <height>20</height>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update_4</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
@@ -3685,7 +3685,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <text>Error Tolerance</text>
+      <text>Err Tolerance</text>
       <tooltip></tooltip>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -3863,7 +3863,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <format>0</format>
       <height>25</height>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <horizontal_buttons_layout>false</horizontal_buttons_layout>
       <limits_from_pv>false</limits_from_pv>
       <maximum>1.7976931348623157E308</maximum>
@@ -3918,7 +3918,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <format_type>0</format_type>
       <height>20</height>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update_5</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
@@ -4056,7 +4056,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <format_type>0</format_type>
       <height>20</height>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update_17</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
@@ -6047,7 +6047,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <format>0</format>
       <height>25</height>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <horizontal_buttons_layout>false</horizontal_buttons_layout>
       <limits_from_pv>false</limits_from_pv>
       <maximum>1.7976931348623157E308</maximum>
@@ -6102,7 +6102,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <format>0</format>
       <height>25</height>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <horizontal_buttons_layout>false</horizontal_buttons_layout>
       <limits_from_pv>false</limits_from_pv>
       <maximum>1.7976931348623157E308</maximum>
@@ -6657,7 +6657,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <format>0</format>
       <height>25</height>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <horizontal_buttons_layout>false</horizontal_buttons_layout>
       <limits_from_pv>false</limits_from_pv>
       <maximum>1.7976931348623157E308</maximum>
@@ -7473,37 +7473,12 @@ $(pv_value)</tooltip>
     <router>1</router>
     <src_path>6e34871b:162f3391a85:-1d61</src_path>
     <src_term>LEFT</src_term>
-    <src_wuid>6e34871b:162f3391a85:-17</src_wuid>
-    <tgt_path>6e34871b:162f3391a85:-1d61</tgt_path>
-    <tgt_term>RIGHT</tgt_term>
-    <tgt_wuid>6e34871b:162f3391a85:-2654</tgt_wuid>
-    <widget_type>connection</widget_type>
-    <wuid>6e34871b:162f3391a85:-15</wuid>
-  </connection>
-  <connection typeId="org.csstudio.opibuilder.connection" version="1.0.0">
-    <anti_alias>true</anti_alias>
-    <arrow_length>5</arrow_length>
-    <arrows>2</arrows>
-    <fill_arrow>false</fill_arrow>
-    <line_color>
-      <color red="0" green="0" blue="0" />
-    </line_color>
-    <line_jump_add>0</line_jump_add>
-    <line_jump_size>10</line_jump_size>
-    <line_jump_style>0</line_jump_style>
-    <line_style>0</line_style>
-    <line_width>1</line_width>
-    <name>connection</name>
-    <points />
-    <router>0</router>
-    <src_path>6e34871b:162f3391a85:-1d61</src_path>
-    <src_term>BOTTOM</src_term>
     <src_wuid>6e34871b:162f3391a85:-2654</src_wuid>
     <tgt_path>6e34871b:162f3391a85:-1d61</tgt_path>
     <tgt_term>RIGHT</tgt_term>
-    <tgt_wuid>6e34871b:162f3391a85:-26cb</tgt_wuid>
+    <tgt_wuid>6e34871b:162f3391a85:-26d3</tgt_wuid>
     <widget_type>connection</widget_type>
-    <wuid>6e34871b:162f3391a85:-17c6</wuid>
+    <wuid>6e34871b:162f3391a85:-17cc</wuid>
   </connection>
   <connection typeId="org.csstudio.opibuilder.connection" version="1.0.0">
     <anti_alias>true</anti_alias>
@@ -7523,12 +7498,12 @@ $(pv_value)</tooltip>
     <router>1</router>
     <src_path>6e34871b:162f3391a85:-1d61</src_path>
     <src_term>LEFT</src_term>
-    <src_wuid>6e34871b:162f3391a85:-2654</src_wuid>
+    <src_wuid>6e34871b:162f3391a85:-17</src_wuid>
     <tgt_path>6e34871b:162f3391a85:-1d61</tgt_path>
     <tgt_term>RIGHT</tgt_term>
-    <tgt_wuid>6e34871b:162f3391a85:-26d3</tgt_wuid>
+    <tgt_wuid>6e34871b:162f3391a85:-2654</tgt_wuid>
     <widget_type>connection</widget_type>
-    <wuid>6e34871b:162f3391a85:-17cc</wuid>
+    <wuid>6e34871b:162f3391a85:-15</wuid>
   </connection>
   <connection typeId="org.csstudio.opibuilder.connection" version="1.0.0">
     <anti_alias>true</anti_alias>
@@ -7554,5 +7529,30 @@ $(pv_value)</tooltip>
     <tgt_wuid>-121d7f33:1646036f9e2:-6ece</tgt_wuid>
     <widget_type>connection</widget_type>
     <wuid>-121d7f33:1646036f9e2:-6e9c</wuid>
+  </connection>
+  <connection typeId="org.csstudio.opibuilder.connection" version="1.0.0">
+    <anti_alias>true</anti_alias>
+    <arrow_length>5</arrow_length>
+    <arrows>2</arrows>
+    <fill_arrow>false</fill_arrow>
+    <line_color>
+      <color red="0" green="0" blue="0" />
+    </line_color>
+    <line_jump_add>0</line_jump_add>
+    <line_jump_size>10</line_jump_size>
+    <line_jump_style>0</line_jump_style>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>connection</name>
+    <points />
+    <router>0</router>
+    <src_path>6e34871b:162f3391a85:-1d61</src_path>
+    <src_term>BOTTOM</src_term>
+    <src_wuid>6e34871b:162f3391a85:-2654</src_wuid>
+    <tgt_path>6e34871b:162f3391a85:-1d61</tgt_path>
+    <tgt_term>RIGHT</tgt_term>
+    <tgt_wuid>6e34871b:162f3391a85:-26cb</tgt_wuid>
+    <widget_type>connection</widget_type>
+    <wuid>6e34871b:162f3391a85:-17c6</wuid>
   </connection>
 </display>
