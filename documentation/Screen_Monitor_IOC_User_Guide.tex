@@ -1,0 +1,367 @@
+\documentclass[openany]{article}
+\usepackage[a4paper,margin=1in,bottom=1.5in]{geometry} % define margins. Bottom margin is used to lift a little bit the page number.
+\usepackage[english]{babel} % document language is english
+\usepackage{tikz} % for drawing (currently not used).
+\usepackage{graphicx} % for including images
+\usepackage[export]{adjustbox}
+\usepackage{fancyhdr} % used for creating headers and footers. only used in title page in this document.
+\usepackage{tabularx} % creation of more complex tables
+\usepackage{longtable} % tables can span multiple pages
+\usepackage{array} % allow elements of tabular environment to have vertical alignment, e.g., center alignment.
+\usepackage{nameref} % make it possible to reference by name
+\usepackage{hyperref} % allow hiperlinks (links to other document parts and extern links)
+\usepackage{etoc} % used for generation of section local table of contents
+\usepackage{placeins} % defines the \FloatBarrier command
+\usepackage{xcolor} % for modifying box color
+\usepackage{adjustbox} % for modifying box parameters
+\usepackage{textcomp} % for having the degree symbol
+\usepackage{listings} % for code snippets
+
+% configure a listing environment for code snippets
+\lstnewenvironment{code}
+    {\lstset{linewidth=\linewidth,
+             backgroundcolor=\color{white},
+             frame=single,basicstyle=\normalsize\ttfamily\color{black},
+             breaklines=true
+             }}
+    {}
+
+% Define graphics path
+\graphicspath{{figs/}}
+
+% Configure the cross reference hyper links color
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+}
+
+\newcolumntype{C}{>{\centering\arraybackslash}X} % new column type for tabularx
+                         % centered (\centering), adjust width in order to fill table width (X type)
+
+% Configure header in 'titlepage'
+\pagestyle{fancy}
+\lhead{\includegraphics[width=4.5cm]{logo_cnpem}}
+\rhead{\includegraphics[width=4cm]{logo_lnls}}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{52pt}
+% Clean footer
+\fancyfoot{}
+
+% increase table height factor a little bit (taller cells)
+\renewcommand{\arraystretch}{1.5}
+
+%==== Begin DOCUMENT ====
+\begin{document}
+
+%--- Begin title page ---
+\begin{titlepage}
+
+% Add header to this page
+\thispagestyle{fancy}
+
+% Center elements
+\begin{center}
+
+% title of title page
+\topskip0pt % perfectly centered
+\vspace*{\fill}
+\textbf{\Huge Screen Monitor EPICS IOC User Guide}\\[20pt]
+\textbf{\Huge Version 1.0}\\[20pt]
+\textbf{\Huge May/2020}
+\vspace*{\fill}
+
+% footer of title page
+\vfill
+\textbf{Beam Diagnostics Group (DIGS)}\\[5pt]
+\textbf{Brazilian Synchrotron Light Laboratory (LNLS)}\\[5pt]
+\textbf{Brazilian Center for Research in Energy and Materials (CNPEM)}
+\end{center}
+
+\end{titlepage}
+%--- End of title page ---
+
+\newpage
+\pagestyle{plain} % restore default page style
+
+%--- About this manual ---
+\paragraph{}{\Large\bfseries About this manual}
+
+\paragraph{} This manual provides an overview of the Screen Monitor EPICS Soft IOC. It is assumed that the reader is familiar with the basics of EPICS.
+
+%--- Table of contents ---
+\tableofcontents
+
+\newpage
+%--- Section: Introduction ---
+\section{Introduction}
+
+\paragraph{} The Screen Monitor EPICS IOC is a Soft IOC used as a high level layer for controlling the Fluorescent Screen Monitors in the Sirius accelerator (not beamlines). The IOC tries to provide intuitive control of screen position and LED. It communicates to hardware by directly linking its records to PVs of the motion controller IOC. The controller used in this application at Sirius is the Galil DMC 30017, and the IOC support used for it can be found at \url{https://github.com/lnls-dig/galil-dmc30017-epics-ioc}.
+
+\paragraph{} The Screen Monitor IOC repository is \url{https://github.com/lnls-dig/screen-epics-ioc}.
+
+%--- Section: Installation ---
+\section{Installation}
+
+    \paragraph{Shortcut} It is possible to run a \emph{docker image} containing the IOC and all of its dependencies. Go to the \hyperref[sec:run-with-docker]{Running the IOC from a docker container} section to see how to do it.
+
+    \subsection{Installing without docker}
+
+        \paragraph{Before everything} Make sure you have EPICS Base 3.15 and the following EPICS modules installed (older versions might work but are not recommended):
+
+        \begin{itemize}
+          \item autosave R5-9
+          \item seq 2-2-6
+          \item calc R3-7
+          \item busy R1-7
+        \end{itemize} 
+
+        \paragraph{} Clone the IOC repository and checkout the desired commit (in case you are not using master).
+
+            \vspace{1mm}
+            \begin{code}
+git clone https://github.com/lnls-dig/screen-epics-ioc.git <install location>
+cd <install location>
+git checkout <commit>
+            \end{code}
+            \vspace{1mm}
+
+        \paragraph{} Create a \emph{RELEASE.local} file inside the \emph{configure/} directory and add the paths to EPICS Base and external modules. An example file is available at \emph{configure/RELEASE.local.example}.
+
+            \vspace{1mm}
+            \begin{code}
+echo 'EPICS_BASE=<EPICS Base path>' > configure/RELEASE.local
+echo 'AUTOSAVE=<Autosave path>' >> configure/RELEASE.local
+echo 'SNCSEQ=<seq path>' >> configure/RELEASE.local
+echo 'CALC=<calc path>' >> configure/RELEASE.local
+echo 'BUSY=<busy path>' >> configure/RELEASE.local
+            \end{code}
+            \vspace{1mm}
+
+        \paragraph{} From the IOC $<$TOP$>$ directory, run make:
+
+            \vspace{1mm}
+            \begin{code}
+make
+            \end{code}
+            \vspace{1mm}
+
+%--- Section: Running the IOC without docker ---
+\section{Running the IOC without docker}
+
+    After successfully building the IOC, from the IOC top directory, run:
+
+        \vspace{1mm}
+        \begin{code}
+cd iocBoot/iocScreen &&
+./runScreen.sh <options>
+        \end{code}
+        \vspace{1mm}
+
+    The available options can be listed by passing any invalid option to the startup script, such as:
+
+        \vspace{1mm}
+        \begin{code}
+./runDiffCtrl.sh -h
+        \end{code}
+        \vspace{1mm}
+
+    or can be consulted in the README.md file at the IOC $<$TOP$>$ directory or project page \url{https://github.com/lnls-dig/screen-epics-ioc}.
+
+%--- Section: Running the IOC from a docker container ---
+\section{Running the IOC from a docker container}\label{sec:run-with-docker}
+
+    \paragraph{} Make sure you have docker installed and that you understand the basics of creating, running and acessing a container, and downloading an image.
+
+    \subsection{Downloading the image (IOC + dependencies)}
+
+        \paragraph{} The image named \textbf{lnlsdig/screen-epics-ioc} contains the compiled IOC and dependencies, and can be downloaded to your machine by running:
+
+        \vspace{1mm}
+        \begin{code}
+docker pull lnlsdig/screen-epics-ioc:<IOC_TAG>
+        \end{code}
+        \vspace{1mm}
+
+        where \emph{$<$IOC\_TAG$>$} should be replaced by the desired IOC version.
+
+        \paragraph{} The IOC version list can be found at \url{https://hub.docker.com/r/lnlsdig/screen-epics-ioc/tags}.
+
+        After the IOC image is downloaded, you can instante it by running a container that uses it.
+
+    \subsection{Running a docker container with that image}
+
+        \paragraph{} One way to run the container is to do:
+
+        \vspace{1mm}
+        \begin{code}
+docker run -it --network host --restart always --name <CONTAINER_NAME> lnlsdig/screen-epics-ioc:<IOC_TAG> -P <PREFIX1> -R <PREFIX2> <other options>
+        \end{code}
+        \vspace{1mm}
+
+        Which is going to run the container starting at its default entrypoint, that is, the IOC startup script. The parameter $<$IOC\_TAG$>$ should be replaced by the IOC version. All the arguments after it are passed to the IOC startup script when run in this way. The $<$PREFIX1$>$ and $<$PREFIX2$>$ are the IOC EPICS PVs prefix, combined as follows: \emph{PV\_PREFIX = PREFIX1 + PREFIX2}. The other startup script arguments should be provided as well. They are listed in the IOC README.md file.
+
+        \paragraph{} \textbf{If you run this command before downloading the image, the image is automatically downloaded, provided there is internet connection}.
+
+        \paragraph{} Below you find an explanation for each flag we used in the above command.
+
+        \begin{itemize}
+          \item -it: interactive (STDIN open) and allocate pseudo-TTY. Since we did not change the container entrypoint, your terminal is going to connect to the IOC shell.
+          \item --network host: configures the container to use the host's network stack inside the container. It is the simplest configuration to use, although it provides no isolation.
+          \item --restart always: restarts the container automatically when it exits.
+          \item --name $<$CONTAINER\_NAME$>$: configures the container name as $<$CONTAINER\_NAME$>$.
+        \end{itemize}
+
+        \paragraph{} In order to stop the docker container, i.e., the IOC, run:
+
+        \vspace{1mm}
+        \begin{code}
+docker stop <CONTAINER_NAME>
+        \end{code}
+        \vspace{1mm}
+
+        \paragraph{} If you want to delete the container, after stopping it, run:
+
+        \vspace{1mm}
+        \begin{code}
+docker rm <CONTAINER_NAME>
+        \end{code}
+        \vspace{1mm}
+
+        \paragraph{} You can also run the contaier with the \emph{--rm} flag to clean up the container and remove the file system when it exits.
+
+%--- Section: Screen Monitor Camera Integration ---
+\section{Screen Monitor Camera Integration}\label{sec:dev-reference-frame}
+
+    This document is still under development.
+
+%--- Section: Screen Selection ---
+\section{Screen Selection}
+
+    This document is still under development.
+
+%--- Section: Calibration of Screen Positions ---
+\section{Calibration of Screen Positions}
+
+    This document is still under development.
+
+%--- Section: LED Control and Calibration ---
+\section{LED Control and Calibration}
+
+    This document is still under development.
+
+\newpage
+\section{Process Variables Description}\label{sec:process-variables}
+
+    Each IOC instance should add a prefix to the process variables indicating which device it controls.
+
+    % Process Variables description table
+    \begin{longtable}{| m{4.5cm} m{2.5cm}  m{7.0cm} |}
+        \caption{Application Process Variables} \\ \hline
+        \bfseries Name & \bfseries Data Type & \bfseries Description \label{tab:PV-description} \endfirsthead
+        \caption{Application Process Variables} \\ \hline
+        \bfseries Name & \bfseries Data Type & \bfseries Description \endhead \hline
+        % --- row ---
+        PV\_NAME & DATA\_TYPE & \begin{tabular}{@{}m{6cm}@{}}
+                            DESCRIPTION
+            \end{tabular} \hypertarget{pv:mtr-ctrl-prefix-cte}{}\\ \hline
+        % --- row ---
+        MtrCtrlPrefix-Cte & String (char[40]) & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{pv:cam-prefix-cte}{}\\ \hline
+        % --- row ---
+        CamPrefix-Cte & String (char[40]) & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{pv:fluor-scrn-pos}{}\\ \hline
+        % --- row ---
+        FluorScrnPos-SP & Float: min -1e3, max 1e3 & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{}{}\\ \hline
+        % --- row ---
+        FluorScrnPos-RB & Float & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{pv:get-fluor-scrn-pos-cmd}{}\\ \hline
+        % --- row ---
+        GetFluorScrnPos-Cmd & Enum: Off (0), On (1) & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{pv:cal-scrn-pos}{}\\ \hline
+        % --- row ---
+        CalScrnPos-SP & Float: min -1e3, max 1e3 & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{}{}\\ \hline
+        % --- row ---
+        CalScrnPos-RB & Float & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{pv:get-cal-scrn-pos-cmd}{}\\ \hline
+        % --- row ---
+        GetCalScrnPos-Cmd & Enum: Off (0), On (1) & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{pv:none-scrn-pos}{}\\ \hline
+        % --- row ---
+        NoneScrnPos-SP & Float: min -1e3, max 1e3 & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{}{}\\ \hline
+        % --- row ---
+        NoneScrnPos-RB & Float & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{pv:get-none-scrn-pos-cmd}{}\\ \hline
+        % --- row ---
+        GetNoneScrnPos-Cmd & Enum: Off (0), On (1) & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{pv:scrn-type}{}\\ \hline
+        % --- row ---
+        ScrnType-Sel & Enum: None (0), Calibration (1), Fluorescent (2) & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{}{}\\ \hline
+        % --- row ---
+        ScrnType-Sts & Enum: None (0), Calibration (1), Fluorescent (2), Unknown (3) & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{pv:accepted-err}{}\\ \hline
+        % --- row ---
+        AcceptedErr-SP & Float: min -1e3, max 1e3 & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{}{}\\ \hline
+        % --- row ---
+        AcceptedErr-RB & Float & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{pv:done-mov-mon}{}\\ \hline
+        % --- row ---
+        DoneMov-Mon & Enum: No (0), Yes (1) & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{pv:enbl-led}{}\\ \hline
+        % --- row ---
+        EnblLED-Sel & Enum: No (0), Yes (1) & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{}{}\\ \hline
+        % --- row ---
+        EnblLED-Sts & Enum: No (0), Yes (1) & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{pv:led-pwr-lvl}{}\\ \hline
+        % --- row ---
+        LEDPwrLvl-SP & Float: min 0, max 100 & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{}{}\\ \hline
+        % --- row ---
+        LEDPwrLvl-RB & Float & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{pv:led-thold}{}\\ \hline
+        % --- row ---
+        LEDThold-SP & Float: min 0, max 10 & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{}{}\\ \hline
+        % --- row ---
+        LEDThold-RB & Float & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{pv:led-pwr-scale-factor}{}\\ \hline
+        % --- row ---
+        LEDPwrScaleFactor-SP & Float: min 1e-6, max 0.02 & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{}{}\\ \hline
+        % --- row ---
+        LEDPwrScaleFactor-RB & Float & \begin{tabular}{@{}m{6cm}@{}}
+                .
+            \end{tabular} \hypertarget{}{}\\ \hline
+    \end{longtable}
+
+\end{document}
+\grid
+
