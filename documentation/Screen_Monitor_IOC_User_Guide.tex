@@ -266,99 +266,99 @@ docker rm <CONTAINER_NAME>
             \end{tabular} \hypertarget{pv:mtr-ctrl-prefix-cte}{}\\ \hline
         % --- row ---
         MtrCtrlPrefix-Cte & String (char[40]) & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                Prefix used by motion controller IOC PVs.
             \end{tabular} \hypertarget{pv:cam-prefix-cte}{}\\ \hline
         % --- row ---
         CamPrefix-Cte & String (char[40]) & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                Prefix used by camera IOC PVs.
             \end{tabular} \hypertarget{pv:fluor-scrn-pos}{}\\ \hline
         % --- row ---
         FluorScrnPos-SP & Float: min -1e3, max 1e3 & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                Fluorescent screen position. This is the set point position sent to the controller when the \emph{Fluorescent} screen type is selected.
             \end{tabular} \hypertarget{}{}\\ \hline
         % --- row ---
         FluorScrnPos-RB & Float & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                The readback value of the \emph{Fluorescent} screen position.
             \end{tabular} \hypertarget{pv:get-fluor-scrn-pos-cmd}{}\\ \hline
         % --- row ---
         GetFluorScrnPos-Cmd & Enum: Off (0), On (1) & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                Command to transfer the current encoder reading to the \emph{Fluorescent} screen position (\emph{FluorScrnPos-SP}). This is useful for avoiding typing errors when specifying the screen associated position. The command is only effective when it receives a value $\neq 0$.
             \end{tabular} \hypertarget{pv:cal-scrn-pos}{}\\ \hline
         % --- row ---
         CalScrnPos-SP & Float: min -1e3, max 1e3 & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                Calibration screen position. This is the set point position sent to the controller when the \emph{Calibration} screen type is selected.
             \end{tabular} \hypertarget{}{}\\ \hline
         % --- row ---
         CalScrnPos-RB & Float & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                The readback value of the \emph{Calibration} screen position.
             \end{tabular} \hypertarget{pv:get-cal-scrn-pos-cmd}{}\\ \hline
         % --- row ---
         GetCalScrnPos-Cmd & Enum: Off (0), On (1) & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                Command to transfer the current encoder reading to the \emph{Calibration} screen position (\emph{CalScrnPos-SP}). This is useful for avoiding typing errors when specifying the screen associated position. The command is only effective when it receives a value $\neq 0$.
             \end{tabular} \hypertarget{pv:none-scrn-pos}{}\\ \hline
         % --- row ---
         NoneScrnPos-SP & Float: min -1e3, max 1e3 & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                None (or Out) screen position. This is the set point position sent to the controller when the \emph{None} screen type is selected.
             \end{tabular} \hypertarget{}{}\\ \hline
         % --- row ---
         NoneScrnPos-RB & Float & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                The readback value of the \emph{None} screen position.
             \end{tabular} \hypertarget{pv:get-none-scrn-pos-cmd}{}\\ \hline
         % --- row ---
         GetNoneScrnPos-Cmd & Enum: Off (0), On (1) & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                Command to transfer the current encoder reading to the \emph{None} screen position (\emph{NoneScrnPos-SP}). This is useful for avoiding typing errors when specifying the screen associated position. The command is only effective when it receives a value $\neq 0$.
             \end{tabular} \hypertarget{pv:scrn-type}{}\\ \hline
         % --- row ---
         ScrnType-Sel & Enum: None (0), Calibration (1), Fluorescent (2) & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                Moves the selected screen type in the beam path. For the \emph{None} screen option, this means clearing the beam path.
             \end{tabular} \hypertarget{}{}\\ \hline
         % --- row ---
         ScrnType-Sts & Enum: None (0), Calibration (1), Fluorescent (2), Unknown (3) & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                The status showing which screen is currently positioned in the beam path. The status shows the screen type associated with the current encoder reading, given a tolerance margin provided by \emph{AcceptedErr-RB}. When no screen is associated with the current reading, then the status is \emph{Unknown}.
             \end{tabular} \hypertarget{pv:accepted-err}{}\\ \hline
         % --- row ---
         AcceptedErr-SP & Float: min -1e3, max 1e3 & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                The tolerance margin, in encoder engineering units, considered when indicating which screen type is positioned in the beam path, given the configured screen positions. A tolerance is necessary, since not all decimal digits provided by the encoder might be significant to the application. 
             \end{tabular} \hypertarget{}{}\\ \hline
         % --- row ---
         AcceptedErr-RB & Float & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                The readback value of the tolerance margin associated to the expected value for the encoder reading at a given screen position, in encoder engineering units.
             \end{tabular} \hypertarget{pv:done-mov-mon}{}\\ \hline
         % --- row ---
         DoneMov-Mon & Enum: No (0), Yes (1) & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                Indicates when the motor has completely finished moving to a given position. The move is also considered to be finished if it has failed, but all retries have been exhausted.
             \end{tabular} \hypertarget{pv:enbl-led}{}\\ \hline
         % --- row ---
         EnblLED-Sel & Enum: No (0), Yes (1) & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                Enable LED. The voltage applied to the LED output depends on the power level, LED threshold, and power scale factor parameters.
             \end{tabular} \hypertarget{}{}\\ \hline
         % --- row ---
         EnblLED-Sts & Enum: No (0), Yes (1) & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                Status of the LED, i.e., if the LED is enabled or not.
             \end{tabular} \hypertarget{pv:led-pwr-lvl}{}\\ \hline
         % --- row ---
         LEDPwrLvl-SP & Float: min 0, max 100 & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                LED power level, specified as a percentage of maximum brightness.
             \end{tabular} \hypertarget{}{}\\ \hline
         % --- row ---
         LEDPwrLvl-RB & Float & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                The readback value of the LED power, as a percentage of maximum brightness.
             \end{tabular} \hypertarget{pv:led-thold}{}\\ \hline
         % --- row ---
         LEDThold-SP & Float: min 0, max 10 & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                LED threshold level. This is the minimum voltage necessary for the LED to emit (a perceptible amount of) light.
             \end{tabular} \hypertarget{}{}\\ \hline
         % --- row ---
         LEDThold-RB & Float & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                The readback value of the LED threshold value, i.e., the minimum voltage necessary for the LED to emit light.
             \end{tabular} \hypertarget{pv:led-pwr-scale-factor}{}\\ \hline
         % --- row ---
         LEDPwrScaleFactor-SP & Float: min 1e-6, max 0.02 & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                The LED power scale factor. This factor controls the maximum voltage level that can be applied to the LED terminals. The formula used to calculate voltage output to the LEDs is $A.e^{B.C}$, where A = LED voltage threshold, B = LED power level (0 to 100), and C = LED power scale factor.
             \end{tabular} \hypertarget{}{}\\ \hline
         % --- row ---
         LEDPwrScaleFactor-RB & Float & \begin{tabular}{@{}m{6cm}@{}}
-                .
+                The readback value of the LED power scale factor.
             \end{tabular} \hypertarget{}{}\\ \hline
     \end{longtable}
 
