@@ -271,6 +271,14 @@ docker rm <CONTAINER_NAME>
         % --- row ---
         CamPrefix-Cte & String (char[40]) & \begin{tabular}{@{}m{6cm}@{}}
                 Prefix used by camera IOC PVs.
+            \end{tabular} \hypertarget{pv:rst-cmd}{}\\ \hline
+        % --- row ---
+        Rst-Cmd & Enum: No (0), Yes (1) & \begin{tabular}{@{}m{6cm}@{}}
+                Reset command. When set to 1, this PV sends a reset command to both motor controller and camera low level IOCs. The reset status is showed by \hyperlink{pv:rst-done-mon}{RstDone-Mon} PV.
+            \end{tabular} \hypertarget{pv:rst-done-mon}{}\\ \hline
+        % --- row ---
+        RstDone-Mon & Enum: In Progress (0), Finished (1) & \begin{tabular}{@{}m{6cm}@{}}
+                Reset done status. This PV shows a combination of the reset status of both motor controller and camera low level IOCs. When both low level IOCs have finished resetting, this PV is set to \emph{Finished} (1), otherwise its status remains \emph{In Progress} (0).
             \end{tabular} \hypertarget{pv:fluor-scrn-pos}{}\\ \hline
         % --- row ---
         FluorScrnPos-SP & Float: min -1e3, max 1e3 & \begin{tabular}{@{}m{6cm}@{}}
