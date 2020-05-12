@@ -168,7 +168,7 @@ record(calc, "$(P)$(R)ScrnTypeCalc"){
 }
 
 # Transfer position of selected screen type to motor
-# record value. If 'None' was selected, do homing.
+# record value.
 record(seq, "$(P)$(R)ScrnTypeConfig"){
   field(DESC, "Move motor to selected scrn type pos")
   field(SELM, "Specified")
@@ -349,6 +349,58 @@ record(ai, "$(P)$(R)LEDPwrScaleFactor-RB"){
   field(PREC, "6")
   field(INP, "$(P)$(R)LEDPwrScaleFactor-SP")
   field(FLNK, "$(P)$(R)ConfigLEDCalc")
+}
+
+#####################################################################
+# RESET
+#
+# Desc: Reset camera and motor controller.
+
+# reset cmd
+record(bo, "$(P)$(R)Rst-Cmd"){
+  field(DESC, "Reset camera and motor controller")
+  field(ZNAM, "No")
+  field(ONAM, "Yes")
+  field(HIGH, "1")
+  field(OUT, "$(P)$(R)ValidRst.A PP")
+}
+
+# validate rst cmd (make sure is non-zero)
+record(calcout, "$(P)$(R)ValidRst"){
+  field(DESC, "Validate reset cmd")
+  field(INPA, "0")
+  field(CALC, "A")
+  field(OOPT, "When Non-zero")
+  field(OUT, "$(P)$(R)RstSeq.PROC PP")
+}
+
+# reset sequence
+record(seq, "$(P)$(R)RstSeq"){
+  field(SELM, "All")
+  field(DO1, "1")
+  field(LNK1, "$(CAM_PREFIX)Rst-Cmd PP")
+  field(DO2, "1")
+  field(LNK2, "$(MTR_CTRL_PREFIX)Rst-Cmd PP")
+}
+
+# verify if reset is finished
+record(calcout, "$(P)$(R)RstDoneCheck"){
+  field(DESC, "Verify reset status")
+  field(INPA, "$(CAM_PREFIX)RstDone-Mon CPP")
+  field(INPB, "$(MTR_CTRL_PREFIX)RstDone-Mon CPP")
+  field(CALC, "A && B")
+  field(FLNK, "$(P)$(R)RstDone-Mon")
+}
+
+# reset done status
+record(mbbi, "$(P)$(R)RstDone-Mon"){
+  field(DESC, "Reset status")
+  field(INP, "$(P)$(R)RstDoneCheck")
+  field(ZRVL, "0")
+  field(ZRST, "In Progress")
+  field(ONVL, "1")
+  field(ONST, "Finished")
+  field(VAL, "1")
 }
 
 #####################################################################
