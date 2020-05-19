@@ -413,8 +413,8 @@ record(mbbi, "$(P)$(R)RstDone-Mon"){
 # Start homing
 record(bo, "$(P)$(R)Home-Cmd"){
   field(DESC, "Command motor to home position")
-  field(ZNAM, "Off")
-  field(ONAM, "On")
+  field(ZNAM, "No")
+  field(ONAM, "Yes")
   field(HIGH, "0.5")
   field(OUT, "$(P)$(R)HomeValid.A PP")
 }
