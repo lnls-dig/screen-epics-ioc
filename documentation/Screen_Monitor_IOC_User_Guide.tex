@@ -232,22 +232,58 @@ docker rm <CONTAINER_NAME>
 %--- Section: Screen Monitor Camera Integration ---
 \section{Screen Monitor Camera Integration}\label{sec:dev-reference-frame}
 
-    This document is still under development.
+    \paragraph{} The Screen Monitor High Level IOC provides an abstraction layer for simple control of its screen position by sending commands to the controller low-level IOC. On the other hand, although the Screen OPI provides image data and PVs to control the camera, the camera control and aquisition is performed only by the \emph{Camera Low-level IOC}. The reason for it is that it would be inefficient to transmit the image data through channel access to the high-level IOC in order to make it available to the user. Since the data size can be relatively large, bandwidth (in the case where the low and high level IOCs are not running on the same machine) and memory would be wasted.
+
+    \paragraph{} The solution chosen for this application was to use \emph{high level aliases} in the low-level camera IOC and reference these aliases in the Screen Monitor OPI. For instance, if the prefix used for the PVs in the camera IOC was \emph{cam:} and the Screen Monitor IOC used the prefix \emph{scrn:}, then the PV \emph{cam:Data-Mon} would have an alias referenced at the Screen OPI named \emph{scrn:ImgData-Mon}.
+
+    \paragraph{} If the prefix used for the aliases in the low-level camera IOC is the same used in the high-level Screen Monitor IOC, then from the user perspective, the image PVs are part of the Screen device.
+
+    \begin{figure}[!h]
+        \caption{Screen Monitor IOC and low-level Camera IOC}
+        \label{fig:cam-integ}
+        \centering
+        \includegraphics[width=1.0\textwidth]{screen_ioc_cam_integration}
+    \end{figure}
+    \FloatBarrier
 
 %--- Section: Screen Selection ---
 \section{Screen Selection}
 
-    This document is still under development.
+    \begin{figure}[!h]
+        \caption{Screen type selection}
+        \label{fig:opi-screen-type}
+        \centering
+        \includegraphics[width=1.0\textwidth]{screen_opi_screen_type}
+    \end{figure}
+    \FloatBarrier
+
+    \paragraph{} In order to move a given screen type in front of the beam, just select the desired option on the button indicated by the red rectangle in the example image. While the screen is moving, the \emph{Done Moving} LED will be off and the status text is going to display \emph{Unknown}, indicating that the motor is not yet in one of the known screen positions. When the \emph{Done Moving} LED turns on, the motor has finished moving. The status text should display the correct desired screen position.
 
 %--- Section: Calibration of Screen Positions ---
 \section{Calibration of Screen Positions}
 
-    This document is still under development.
+    \begin{figure}[!h]
+        \caption{Screen positions calibration}
+        \label{fig:opi-screen-cal}
+        \centering
+        \includegraphics[width=1.0\textwidth]{screen_opi_screen_cal}
+    \end{figure}
+    \FloatBarrier
+
+    \paragraph{} The red rectangle in the example figure shows the buttons and boxes used for screen position calibration. The boxes at the left should contain the position, in motion controller engineering units, of each screen type. When one of the positions is selected, the motor is commanded to the corresponding configured position. The arrow buttons at the right of each box can be used to transfer the current encoder reading to the corresponding box. This is appropriate when configuring the screen position based on some visual feedback. In this case, the motor can be moved until reaching a satisfactory position and the encoder value transfered to one of the calibration position values. The motor can be moved to any position through the \emph{Abs Position} set point. This widget is actually linked to a low-level PV and only works when the motion controller IOC is running. The \emph{Err Tolerance} value defines the tolerance used by the screen type status. In order for the status to indicate a given screen type, the motor must be positioned in the configured value with a maximum error given by the tolerance.
 
 %--- Section: LED Control and Calibration ---
 \section{LED Control and Calibration}
 
-    This document is still under development.
+    \begin{figure}[!h]
+        \caption{LED control and calibration}
+        \label{fig:opi-led-cal}
+        \centering
+        \includegraphics[width=1.0\textwidth]{screen_opi_led_cal}
+    \end{figure}
+    \FloatBarrier
+
+    \paragraph{} For Screen Monitors that use LEDs, the \emph{Enable LED} button controls whether any voltage is provided to the LED terminals. If the LED is enabled, then the \emph{LED Power} specifies what percentage of maximum brightness the LED should have. The \emph{Threshold} specifies the minimum voltage that the LEDs should receive when enabled, while the \emph{Scale Factor} specifies the translation between LED Power and applied output voltage though the formula: $A.e^{B.C}$, where A = LED voltage threshold, B = LED power level (0 to 100), and C = LED power scale factor.
 
 \newpage
 \section{Process Variables Description}\label{sec:process-variables}
