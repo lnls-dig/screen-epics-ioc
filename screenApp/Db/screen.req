@@ -22,3 +22,6 @@ $(P)$(R)LEDThold-SP
 
 # LED Level Conversion Factor
 $(P)$(R)LEDPwrScaleFactor-SP
+
+# Position to move to after homing
+$(P)$(R)TargetPosAfterHome-SP

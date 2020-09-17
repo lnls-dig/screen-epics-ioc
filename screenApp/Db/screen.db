@@ -168,7 +168,7 @@ record(calc, "$(P)$(R)ScrnTypeCalc"){
 }
 
 # Transfer position of selected screen type to motor
-# record value. If 'None' was selected, do homing.
+# record value.
 record(seq, "$(P)$(R)ScrnTypeConfig"){
   field(DESC, "Move motor to selected scrn type pos")
   field(SELM, "Specified")
@@ -352,6 +352,259 @@ record(ai, "$(P)$(R)LEDPwrScaleFactor-RB"){
 }
 
 #####################################################################
+# RESET
+#
+# Desc: Reset camera and motor controller.
+
+# reset cmd
+record(bo, "$(P)$(R)Rst-Cmd"){
+  field(DESC, "Reset camera and motor controller")
+  field(ZNAM, "No")
+  field(ONAM, "Yes")
+  field(HIGH, "1")
+  field(OUT, "$(P)$(R)ValidRst.A PP")
+}
+
+# validate rst cmd (make sure is non-zero)
+record(calcout, "$(P)$(R)ValidRst"){
+  field(DESC, "Validate reset cmd")
+  field(INPA, "0")
+  field(CALC, "A")
+  field(OOPT, "When Non-zero")
+  field(OUT, "$(P)$(R)RstSeq.PROC PP")
+}
+
+# reset sequence
+record(seq, "$(P)$(R)RstSeq"){
+  field(SELM, "All")
+  field(DO1, "1")
+  field(LNK1, "$(CAM_PREFIX)Rst-Cmd PP")
+  field(DO2, "1")
+  field(LNK2, "$(MTR_CTRL_PREFIX)Rst-Cmd PP")
+}
+
+# verify if reset is finished
+record(calcout, "$(P)$(R)RstDoneCheck"){
+  field(DESC, "Verify reset status")
+  field(INPA, "$(CAM_PREFIX)RstDone-Mon CPP")
+  field(INPB, "$(MTR_CTRL_PREFIX)RstDone-Mon CPP")
+  field(CALC, "A && B")
+  field(FLNK, "$(P)$(R)RstDone-Mon")
+}
+
+# reset done status
+record(mbbi, "$(P)$(R)RstDone-Mon"){
+  field(DESC, "Reset status")
+  field(INP, "$(P)$(R)RstDoneCheck")
+  field(ZRVL, "0")
+  field(ZRST, "In Progress")
+  field(ONVL, "1")
+  field(ONST, "Finished")
+  field(VAL, "1")
+}
+
+#####################################################################
+# HOMING
+#
+# Desc: Command motor controller to home position,
+#       moving backwards if motor direction is positive
+#       or forward if motor direction is negative.
+
+# Start homing
+record(bo, "$(P)$(R)Home-Cmd"){
+  field(DESC, "Command motor to home position")
+  field(ZNAM, "No")
+  field(ONAM, "Yes")
+  field(HIGH, "0.5")
+  field(OUT, "$(P)$(R)HomeValid.A PP")
+}
+
+# validate the home cmd (must be non-zero)
+record(calcout, "$(P)$(R)HomeValid"){
+  field(DESC, "Validate home cmd")
+  field(INPB, "$(MTR_CTRL_PREFIX)RstDone-Mon")
+  field(CALC, "A && B")    # Reset must NOT be in progress
+  field(OOPT, "When Non-zero")
+  field(OUT, "$(P)$(R)HomeCalc.PROC PP")
+}
+
+# choose config based on mtr direction
+record(calc, "$(P)$(R)HomeCalc"){
+  field(DESC, "Home direction calc")
+  field(INPA, "$(MTR_CTRL_PREFIX)Mtr.DIR")
+  field(CALC, "A=1?3:12")
+  field(FLNK, "$(P)$(R)HomeInit")
+}
+
+# Homing initialization sequece
+record(seq, "$(P)$(R)HomeInit"){
+  field(DESC, "Homing initialization sequence")
+  field(SELM, "All")
+  field(DO1, "0")
+  field(LNK1, "$(P)$(R)HomeDone-Mon PP")
+  # Use limit switch as home switch
+  field(DO2, "1")
+  field(LNK2, "$(MTR_CTRL_PREFIX)UseSw-Sel PP")
+  # Enable jog after homing
+  field(DO3, "1")
+  field(LNK3, "$(MTR_CTRL_PREFIX)JogAfterHome-Sel PP")
+  # Processing jog position before homing makes
+  # sure that jog position is correctly configured
+  # for the given motion direction
+  field(DO4, "1")
+  field(LNK4, "$(P)$(R)TargetPosAfterHome-SP.PROC PP")
+  # send current position as command to motor.
+  # this prevents a bug in which, after homing,
+  # when trying to jog to a target position
+  # the motor moves indefinitely until stop is
+  # sent.
+  field(DOL5, "$(MTR_CTRL_PREFIX)EncPos-Mon")
+  field(LNK5, "$(MTR_CTRL_PREFIX)AbsPos-SP PP")
+  # set flag indicating that next motion is
+  # homing itself (used by homing status monitor).
+  # only do this after AbsPos-SP has been proc in
+  # previous link
+  field(DLY6, "0.5")
+  field(DO6, "0")
+  field(LNK6, "$(P)$(R)HomeDoneAux PP")
+  # proceed with homing
+  field(DLY7, "0.5")
+  field(DO7, "1")
+  field(LNK7, "$(P)$(R)HomeStart.PROC PP")
+
+}
+
+# Target position to go after homing
+record(ao, "$(P)$(R)TargetPosAfterHome-SP"){
+  field(DESC, "Target position to go after homing")
+  field(PINI, "YES")
+  field(FLNK, "$(P)$(R)TargetPosAfterHomeCalc")
+}
+
+record(calcout, "$(P)$(R)TargetPosAfterHomeCalc"){
+  field(DESC, "Calc target position for after homing")
+  field(INPA, "$(P)$(R)TargetPosAfterHome-SP")
+  field(INPB, "$(MTR_CTRL_PREFIX)Mtr.DIR")
+  field(CALC, "B=0?A:-A")
+  field(OUT, "$(MTR_CTRL_PREFIX)JogAfterHome-SP PP")
+  field(FLNK, "$(P)$(R)TargetPosAfterHome-RB")
+}
+
+# Readback of target position to go after homing
+record(ai, "$(P)$(R)TargetPosAfterHome-RB"){
+  field(DESC, "RB for target position after homing")
+  field(INP, "$(P)$(R)TargetPosAfterHome-SP")
+}
+
+# start homing
+record(seq, "$(P)$(R)HomeStart"){
+  field(DESC, "Homing start sequence")
+  field(SELM, "Mask")
+  field(SELL, "$(P)$(R)HomeCalc")
+  # enable forward homing
+  field(DO1, "2")
+  field(LNK1, "$(MTR_CTRL_PREFIX)HomeEnblDir-Sel PP")
+  # delay homing until config is set
+  field(DLY2, "1")
+  # home forward
+  field(DO2, "1")
+  field(LNK2, "$(MTR_CTRL_PREFIX)Mtr.HOMF PP")
+  # enable reverse homing
+  field(DO3, "1")
+  field(LNK3, "$(MTR_CTRL_PREFIX)HomeEnblDir-Sel PP")
+  # delay homing until config is set
+  field(DLY4, "1")
+  # home reverse
+  field(DO4, "1")
+  field(LNK4, "$(MTR_CTRL_PREFIX)Mtr.HOMR PP")
+}
+
+# set flag when homing starts
+record(calcout, "$(P)$(R)HomeStartStsCalc"){
+  field(DESC, "Homing start status calc")
+  field(INPA, "$(MTR_CTRL_PREFIX)Mtr.DMOV CPP")
+  field(INPB, "$(P)$(R)HomeDoneAux")
+  field(CALC, "(B=0)&&(A=0)")
+  field(OOPT, "When Non-zero")
+  field(OUT, "$(P)$(R)HomeStartStsFlag PP")
+}
+
+# homing start flag
+record(bi, "$(P)$(R)HomeStartStsFlag"){
+  field(DESC, "Home start status flag")
+}
+
+# monitor motors 'done moving' field
+record(calcout, "$(P)$(R)HomeDoneMoving"){
+  field(DESC, "Monitor when motors are done moving")
+  field(INPA, "$(MTR_CTRL_PREFIX)Mtr.DMOV CPP")
+  field(INPB, "$(P)$(R)HomeStartStsFlag")
+  field(CALC, "A && B")
+  field(OOPT, "When Non-zero")
+  # delay until 'at home' field is set for sure
+  field(ODLY, "1")
+  field(OUT, "$(P)$(R)HomeEndStsCalc.PROC PP")
+}
+
+# monitor motor rec 'at home' field
+record(calcout, "$(P)$(R)AtHomeMon"){
+  field(DESC, "Monitor motor rec ATHM field")
+  field(INPA, "$(MTR_CTRL_PREFIX)Mtr.ATHM CPP")
+  field(INPB, "$(P)$(R)HomeStartStsFlag")
+  field(CALC, "A && B")
+  field(OOPT, "Transition To Non-zero")
+  field(OUT, "$(P)$(R)AtHomeFlag PP")
+}
+
+# 'at home' flag
+record(longout, "$(P)$(R)AtHomeFlag"){
+  field(DESC, "At home flag")
+  field(MDEL, "-1")
+}
+
+# check that motor is at limit switch
+# after homing is finished
+record(calcout, "$(P)$(R)HomeEndStsCalc"){
+  field(DESC, "Homing end status calc")
+  field(INPA, "$(P)$(R)AtHomeFlag")
+  field(CALC, "A?1:2")
+  field(VAL, "1")
+  field(FLNK, "$(P)$(R)HomeDoneUpdate")
+}
+
+# update home done
+record(seq, "$(P)$(R)HomeDoneUpdate"){
+  field(DESC, "Update home done status")
+  field(SELM, "All")
+  field(DO1, "0")
+  field(LNK1, "$(P)$(R)HomeStartStsFlag PP")
+  field(DO2, "0")
+  field(LNK2, "$(P)$(R)AtHomeFlag PP")
+  field(DO3, "1")
+  field(LNK3, "$(P)$(R)HomeDoneAux PP")
+  field(DOL4, "$(P)$(R)HomeEndStsCalc.VAL")
+  field(LNK4, "$(P)$(R)HomeDone-Mon PP")
+}
+
+# home done status
+record(mbbi, "$(P)$(R)HomeDone-Mon"){
+  field(DESC, "Homing status")
+  field(ZRVL, "0")
+  field(ZRST, "In Progress")
+  field(ONVL, "1")
+  field(ONST, "Finished")
+  field(TWVL, "2")
+  field(TWST, "Error")
+  field(VAL, "1")
+}
+
+# internal auxiliary variable for home done
+record(longin, "$(P)$(R)HomeDoneAux"){
+  field(DESC, "Internal homing status")
+  field(VAL, "1")
+}
+
+#####################################################################
 # EGU and PREC SETTINGS
 #
 # Desc: Engineering units and precision are
@@ -368,12 +621,16 @@ record(sseq, "$(P)$(R)AutoSetEGU"){
   field(DOL4, "$(MTR_CTRL_PREFIX)Mtr.EGU")
   field(DOL5, "$(MTR_CTRL_PREFIX)Mtr.EGU")
   field(DOL6, "$(MTR_CTRL_PREFIX)Mtr.EGU")
+  field(DOL7, "$(MTR_CTRL_PREFIX)Mtr.EGU")
+  field(DOL8, "$(MTR_CTRL_PREFIX)Mtr.EGU")
   field(LNK1, "$(P)$(R)FluorScrnPos-SP.EGU")
   field(LNK2, "$(P)$(R)FluorScrnPos-RB.EGU")
   field(LNK3, "$(P)$(R)CalScrnPos-SP.EGU")
   field(LNK4, "$(P)$(R)CalScrnPos-RB.EGU")
   field(LNK5, "$(P)$(R)AcceptedErr-SP.EGU")
   field(LNK6, "$(P)$(R)AcceptedErr-RB.EGU")
+  field(LNK7, "$(P)$(R)TargetPosAfterHome-SP.EGU")
+  field(LNK8, "$(P)$(R)TargetPosAfterHome-RB.EGU")
 }
 
 # PREC is obtained from low-level controller IOC
@@ -387,11 +644,15 @@ record(sseq, "$(P)$(R)AutoSetPrec"){
   field(DOL4, "$(MTR_CTRL_PREFIX)Mtr.PREC")
   field(DOL5, "$(MTR_CTRL_PREFIX)Mtr.PREC")
   field(DOL6, "$(MTR_CTRL_PREFIX)Mtr.PREC")
+  field(DOL7, "$(MTR_CTRL_PREFIX)Mtr.PREC")
+  field(DOL8, "$(MTR_CTRL_PREFIX)Mtr.PREC")
   field(LNK1, "$(P)$(R)FluorScrnPos-SP.PREC")
   field(LNK2, "$(P)$(R)FluorScrnPos-RB.PREC")
   field(LNK3, "$(P)$(R)CalScrnPos-SP.PREC")
   field(LNK4, "$(P)$(R)CalScrnPos-RB.PREC")
   field(LNK5, "$(P)$(R)AcceptedErr-SP.PREC")
   field(LNK6, "$(P)$(R)AcceptedErr-RB.PREC")
+  field(LNK7, "$(P)$(R)TargetPosAfterHome-SP.PREC")
+  field(LNK8, "$(P)$(R)TargetPosAfterHome-RB.PREC")
 }
 
