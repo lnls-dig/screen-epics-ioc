@@ -7,8 +7,9 @@ set +u
 . ./parseCMDOpts.sh "$@"
 
 # Use defaults if not set
+UNIX_SOCKET=""
 if [ -z "${DEVICE_TELNET_PORT}" ]; then
-   DEVICE_TELNET_PORT="20000"
+    UNIX_SOCKET="true"
 fi
 
 if [ -z "${SCREEN_INSTANCE}" ]; then
@@ -18,4 +19,8 @@ fi
 set -u
 
 # Run run*.sh scripts with procServ
-/usr/local/bin/procServ -f -n screen_${SCREEN_INSTANCE} -i ^C^D ${DEVICE_TELNET_PORT} ./runScreen.sh "$@"
+if [ "${UNIX_SOCKET}" ]; then
+    /usr/local/bin/procServ -f -n screen_${SCREEN_INSTANCE} -i ^C^D unix:./procserv.sock ./runScreen.sh "$@"
+else
+    /usr/local/bin/procServ -f -n screen_${SCREEN_INSTANCE} -i ^C^D ${DEVICE_TELNET_PORT} ./runScreen.sh "$@"
+fi
